@@ -19,6 +19,9 @@ class AddUserView extends View {
   toogleWindow() {
     this._window.classList.toggle('hidden');
     this._overlay.classList.toggle('hidden');
+
+    const elements = Array.from(this._parentEl.elements);
+    elements.forEach(el => el.value = '');
   }
 
   _addHandlerShowWindow() {
