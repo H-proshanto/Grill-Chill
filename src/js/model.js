@@ -1,15 +1,29 @@
+import admins from './data/admins.js'
+import users from './data/users.js';
 export const state = {
   recipe: {},
   search: {
     query: '',
     results: [],
-    resultsPerPage: RES_PER_PAGE,
+    // resultsPerPage: RES_PER_PAGE,
     page: 1,
   },
   bookmarks: [],
   isAdmin:false,
   isUser:false,
 };
+
+export const isAuthenticated = function(userData) {
+  admins.forEach(admin => {
+    if(admin.username === userData.username && admin.password === userData.password)state.isAdmin = true;
+  })
+
+  users.forEach(users => {
+    if(users.username === userData.username && users.password === userData.password)state.isUser = true;
+  })
+
+}
+
 
 export const uploadRecipe = async function (newRecipe) {
   try {

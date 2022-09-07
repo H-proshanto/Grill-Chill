@@ -35,6 +35,14 @@ class AddUserView extends View {
   addHandlerUploadUser(handler) {
     
   }
+
+  showButton() {
+    this._btnOpen.classList.remove('hidden');
+  }
+
+  hideButton() {
+    this._btnOpen.classList.add('hidden');
+  }
 }
 
 export default new AddUserView();

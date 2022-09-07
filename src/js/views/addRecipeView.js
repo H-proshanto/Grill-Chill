@@ -32,6 +32,14 @@ class AddRecipeView extends View {
   }
 
   addHandlerUpload(handler) {}
+
+  showButton() {
+    this._btnOpen.classList.remove('hidden');
+  }
+
+  hideButton() {
+    this._btnOpen.classList.add('hidden');
+  }
 }
 
 export default new AddRecipeView();

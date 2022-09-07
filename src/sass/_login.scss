@@ -77,3 +77,11 @@
   z-index: 100;
   transition: all 0.5s;
 }
+
+.error {
+  position: relative;
+  width: max-content;
+  text-align: center;
+  font-size: 2rem;
+  padding-left: 8rem;
+}

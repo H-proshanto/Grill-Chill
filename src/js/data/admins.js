@@ -8,4 +8,5 @@ const admin2 = {
     password: 'fym',
 }
 
-export const admins = [admin1,admin2]; 
+const admins = [admin1,admin2];
+export  default  admins;
