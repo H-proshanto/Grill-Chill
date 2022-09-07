@@ -1,0 +1,23 @@
+{
+  "name": "grill-chill",
+  "version": "1.0.0",
+  "description": "Recipe Searching Web Application",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/H-proshanto/Grill-Chill.git"
+  },
+  "author": "Proshanto Lal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/H-proshanto/Grill-Chill/issues"
+  },
+  "homepage": "https://github.com/H-proshanto/Grill-Chill#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.7.0",
+    "parcel": "^2.7.0"
+  }
+}
