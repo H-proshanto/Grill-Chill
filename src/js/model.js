@@ -7,6 +7,8 @@ export const state = {
     page: 1,
   },
   bookmarks: [],
+  isAdmin:false,
+  isUser:false,
 };
 
 export const uploadRecipe = async function (newRecipe) {
