@@ -19,23 +19,24 @@ class LoginView extends View {
   }
 
   toogleWindow() {
-    const hasErrorMessage = this._parentEl.lastChild.classList?.contains('error');
+    const hasErrorMessage =
+      this._parentEl.lastChild.classList?.contains('error');
     this._window.classList.toggle('hidden');
     this._overlay.classList.toggle('hidden');
 
     const elements = Array.from(this._parentEl.elements);
-    elements.forEach(el => el.value = '');
+    elements.forEach(el => (el.value = ''));
 
-    if(hasErrorMessage) {
+    if (hasErrorMessage) {
       setTimeout(() => {
-      this._clear();
-      this._parentEl.innerHTML = this._generateMarkup();
-      },refresh)
+        this._clear();
+        this._parentEl.innerHTML = this._generateMarkup();
+      }, refresh);
     }
   }
 
   _addHandlerShowWindow() {
-    this._btnOpen.addEventListener('click',this.toogleWindow.bind(this));
+    this._btnOpen.addEventListener('click', this.toogleWindow.bind(this));
   }
 
   _addHandlerHideWindow() {
@@ -51,20 +52,12 @@ class LoginView extends View {
     });
   }
 
-  showButton() {
-    this._btnOpen.classList.remove('hidden');
-  }
-
-  hideButton() {
-    this._btnOpen.classList.add('hidden');
-  }
-
   _generateMarkup() {
     return ` <label>Username</label>
     <input type="text" required placeholder="User Name" name="username"/>
     <label>Password</label>
     <input type="password" required placeholder="Password" name="password" />
-    <button class="btn">Log In</button>`
+    <button class="btn">Log In</button>`;
   }
 }
 

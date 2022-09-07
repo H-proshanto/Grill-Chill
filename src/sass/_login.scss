@@ -1,6 +1,6 @@
 .login-window {
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 68rem;
@@ -76,12 +76,4 @@
   backdrop-filter: blur(4px);
   z-index: 100;
   transition: all 0.5s;
-}
-
-.error {
-  position: relative;
-  width: max-content;
-  text-align: center;
-  font-size: 2rem;
-  padding-left: 8rem;
 }

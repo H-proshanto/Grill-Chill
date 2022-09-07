@@ -1,2 +1,2 @@
-export const msgLoadTime = 0.6;
+export const msgLoadTime = 0.5;
 export const refresh = 400;

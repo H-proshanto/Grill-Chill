@@ -6,11 +6,15 @@ class AddRecipeView extends View {
 
   _window = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.add-recipe-overlay');
-  _btnOpen = document.querySelector('.nav__btn--add-recipe');
+  _btnOpen = null;
   _btnClose = document.querySelector('.add-recipe-btn--close-modal');
 
   constructor() {
     super();
+  }
+
+  init() {
+    this._btnOpen = document.querySelector('.nav__btn--add-recipe');
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
   }
@@ -20,7 +24,7 @@ class AddRecipeView extends View {
     this._overlay.classList.toggle('hidden');
 
     const elements = Array.from(this._parentEl.elements);
-    elements.forEach(el => el.value = '');
+    elements.forEach(el => (el.value = ''));
   }
 
   _addHandlerShowWindow() {

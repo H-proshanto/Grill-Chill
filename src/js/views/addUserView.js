@@ -21,7 +21,7 @@ class AddUserView extends View {
     this._overlay.classList.toggle('hidden');
 
     const elements = Array.from(this._parentEl.elements);
-    elements.forEach(el => el.value = '');
+    elements.forEach(el => (el.value = ''));
   }
 
   _addHandlerShowWindow() {
@@ -32,17 +32,7 @@ class AddUserView extends View {
     this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
   }
 
-  addHandlerUploadUser(handler) {
-    
-  }
-
-  showButton() {
-    this._btnOpen.classList.remove('hidden');
-  }
-
-  hideButton() {
-    this._btnOpen.classList.add('hidden');
-  }
+  addHandlerUploadUser(handler) {}
 }
 
 export default new AddUserView();

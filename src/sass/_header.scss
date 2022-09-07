@@ -112,7 +112,6 @@
 .bookmarks {
   padding: 1rem 0;
   position: absolute;
-  // right: 0;
   right: -2.5rem;
   z-index: 10;
   width: 40rem;
@@ -146,4 +145,17 @@
     visibility: visible;
     opacity: 1;
   }
+}
+
+.userName {
+  height: 100%;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  padding: 0 -2rem;
+
+  display: flex;
+  align-items: center;
 }
