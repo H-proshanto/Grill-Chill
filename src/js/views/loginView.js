@@ -25,12 +25,11 @@ class LoginView extends View {
   }
 
   _addHandlerShowWindow() {
-    this._btnOpen.addEventListener('click', this.toogleWindow.bind(this));
+    this._btnOpen.addEventListener('click',this.toogleWindow.bind(this));
   }
 
   _addHandlerHideWindow() {
     this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
-    this._overlay.addEventListener('click', this.toogleWindow.bind(this));
   }
 
   addHandlerLoginUser(handler) {

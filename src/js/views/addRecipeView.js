@@ -29,7 +29,6 @@ class AddRecipeView extends View {
 
   _addHandlerHideWindow() {
     this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
-    this._overlay.addEventListener('click', this.toogleWindow.bind(this));
   }
 
   addHandlerUpload(handler) {}

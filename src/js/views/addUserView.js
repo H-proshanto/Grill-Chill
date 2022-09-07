@@ -30,16 +30,10 @@ class AddUserView extends View {
 
   _addHandlerHideWindow() {
     this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
-    this._overlay.addEventListener('click', this.toogleWindow.bind(this));
   }
 
   addHandlerUploadUser(handler) {
-    // this._parentEl.addEventListener('submit', function (e) {
-    //   e.preventDefault();
-    //   const dataArr = [...new FormData(this)];
-    //   const data = Object.fromEntries(dataArr);
-    //   handler(data);
-    // });
+    
   }
 }
 
