@@ -43,7 +43,6 @@ class AddUserView extends View {
   }
 
   _addHandlerHideWindow() {
-    console.log('hello');
     this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
   }
 

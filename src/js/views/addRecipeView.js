@@ -16,7 +16,8 @@ class AddRecipeView extends View {
   init() {
     this._btnOpen = document.querySelector('.nav__btn--add-recipe');
     this._addHandlerShowWindow();
-    this._addHandlerHideWindow();
+    if (this._hide === undefined) this._addHandlerHideWindow();
+    this._hide = true;
   }
 
   toogleWindow() {
