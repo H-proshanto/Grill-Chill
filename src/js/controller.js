@@ -5,6 +5,8 @@ import addUserView from './views/addUserView.js';
 import loginView from './views/loginView.js';
 import bookmarksView from './views/bookmarksView.js';
 
+import { initAdmins } from './data/admins.js';
+import { initUsers } from './data/users.js';
 import { msgLoadTime } from './config.js';
 
 const controlAddRecipe = async function (newRecipe) {
@@ -17,8 +19,11 @@ const controlAddRecipe = async function (newRecipe) {
 
 const controlAddUser = async function (newUser) {
   try {
-    console.log('addsUser');
+    model.uploadedUser(newUser);
+    addUserView.renderSpinner();
+    setTimeout(addUserView.renderMessage.bind(addUserView), msgLoadTime * 1000);
   } catch (err) {
+    addUserView.renderError();
     console.error(err);
   }
 };
@@ -33,6 +38,7 @@ const controlUserLogin = async function (userData) {
       helpers.addSessionUserName();
       helpers.addCustomRecipeBtn();
       helpers.addLogoutBtn();
+      helpers.addlogoutEvListner(controlLogoutBtn);
       addRecipeView.addHandlerUpload(controlAddRecipe);
       addRecipeView.init();
     } else if (model.state.isUser) {
@@ -40,6 +46,7 @@ const controlUserLogin = async function (userData) {
       helpers.addSessionUserName();
       helpers.addBookmarksBtn();
       helpers.addLogoutBtn();
+      helpers.addlogoutEvListner(controlLogoutBtn);
       bookmarksView.addHandlerRender(controlBookmarks);
     } else {
       setTimeout(() => {
@@ -55,9 +62,26 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlLogoutBtn = function () {
+  try {
+    helpers.clearNav();
+    helpers.addloginBtn();
+    helpers.addRegistrationpBtn();
+    loginView.refreshBtn();
+    addUserView.refreshBtn();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const init = function () {
   addUserView.addHandlerUploadUser(controlAddUser);
   loginView.addHandlerLoginUser(controlUserLogin);
+
+  const userFlag = localStorage.getItem('userFlag');
+  const adminFlag = localStorage.getItem('adminFlag');
+  if (adminFlag !== 'true') initAdmins();
+  if (userFlag !== 'true') initUsers();
 };
 
 init();

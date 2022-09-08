@@ -1,5 +1,3 @@
-import admins from './data/admins.js';
-import users from './data/users.js';
 export const state = {
   username: '',
   recipe: {},
@@ -15,6 +13,9 @@ export const state = {
 };
 
 export const isAuthenticated = function (userData) {
+  const admins = JSON.parse(localStorage.getItem('admins'));
+  const users = JSON.parse(localStorage.getItem('users'));
+
   admins.forEach(admin => {
     if (
       admin.username === userData.username &&
@@ -32,6 +33,14 @@ export const isAuthenticated = function (userData) {
       state.isUser = true;
     state.username = userData.username;
   });
+};
+
+export const uploadedUser = function (newUser) {
+  const users = JSON.parse(localStorage.getItem('users'));
+
+  newUser.bookmarks = [];
+  users.push(newUser);
+  localStorage.setItem('users', JSON.stringify(users));
 };
 
 export const uploadRecipe = async function (newRecipe) {

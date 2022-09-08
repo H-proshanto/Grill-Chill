@@ -4,6 +4,38 @@ import icons from '../img/icons.svg';
 import { state } from './model';
 import { msgLoadTime } from './config';
 
+export const addloginBtn = function () {
+  const parentEl = document.querySelector('.nav__list');
+
+  const html = `
+  <li class="nav__item">
+    <button class="nav__btn nav__btn--login">
+      <svg class="nav__icon">
+        <use href="${icons}#icon-user"></use>
+      </svg>
+      <span>Sign In</span>
+    </button>
+  </li>`;
+
+  parentEl.insertAdjacentHTML('beforeend', html);
+};
+
+export const addRegistrationpBtn = function () {
+  const parentEl = document.querySelector('.nav__list');
+
+  const html = `
+  <li class="nav__item">
+    <button class="nav__btn nav__btn--registration">
+      <svg class="nav__icon">
+        <use href="${icons}#icon-arrow-right"></use>
+      </svg>
+      <span>Sign Up</span>
+    </button>
+  </li>`;
+
+  parentEl.insertAdjacentHTML('beforeend', html);
+};
+
 export const addCustomRecipeBtn = function () {
   const parentEl = document.querySelector('.nav__list');
 
@@ -80,13 +112,24 @@ export const addLogoutBtn = function () {
   parentEl.insertAdjacentHTML('beforeend', html);
 };
 
-export const hideButtonsAndModal = function () {
+export const clearNav = function () {
   parentEl = document.querySelector('.nav__list');
   parentEl.innerHTML = '';
+};
+
+export const hideButtonsAndModal = function () {
+  clearNav();
 
   setTimeout(loginView.renderMessage.bind(loginView), msgLoadTime * 1000);
   setTimeout(() => {
     loginView.renderMessage();
     setTimeout(loginView.toogleWindow.bind(loginView), msgLoadTime * 220);
   }, msgLoadTime * 1000);
+};
+
+export const addlogoutEvListner = function (handler) {
+  const parentEl = document.querySelector('.nav__btn--logout');
+  parentEl.addEventListener('click', function (e) {
+    handler();
+  });
 };

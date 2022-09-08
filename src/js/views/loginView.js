@@ -18,7 +18,13 @@ class LoginView extends View {
     this._addHandlerHideWindow();
   }
 
+  refreshBtn() {
+    this._btnOpen = document.querySelector('.nav__btn--login');
+    this._addHandlerShowWindow();
+  }
+
   toogleWindow() {
+    const hasMessage = this._parentEl.lastChild.classList?.contains('message');
     const hasErrorMessage =
       this._parentEl.lastChild.classList?.contains('error');
     this._window.classList.toggle('hidden');
@@ -27,7 +33,7 @@ class LoginView extends View {
     const elements = Array.from(this._parentEl.elements);
     elements.forEach(el => (el.value = ''));
 
-    if (hasErrorMessage) {
+    if (hasErrorMessage || hasMessage) {
       setTimeout(() => {
         this._clear();
         this._parentEl.innerHTML = this._generateMarkup();
@@ -53,7 +59,8 @@ class LoginView extends View {
   }
 
   _generateMarkup() {
-    return ` <label>Username</label>
+    return ` 
+    <label>Username</label>
     <input type="text" required placeholder="User Name" name="username"/>
     <label>Password</label>
     <input type="password" required placeholder="Password" name="password" />
