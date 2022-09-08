@@ -5,8 +5,6 @@ import addUserView from './views/addUserView.js';
 import loginView from './views/loginView.js';
 import bookmarksView from './views/bookmarksView.js';
 
-import { initAdmins } from './data/admins.js';
-import { initUsers } from './data/users.js';
 import { msgLoadTime } from './config.js';
 
 const controlAddRecipe = async function (newRecipe) {
@@ -41,6 +39,7 @@ const controlUserLogin = async function (userData) {
       helpers.addlogoutEvListner(controlLogoutBtn);
       addRecipeView.addHandlerUpload(controlAddRecipe);
       addRecipeView.init();
+      model.setLoginHash(userData);
     } else if (model.state.isUser) {
       helpers.hideButtonsAndModal();
       helpers.addSessionUserName();
@@ -48,6 +47,7 @@ const controlUserLogin = async function (userData) {
       helpers.addLogoutBtn();
       helpers.addlogoutEvListner(controlLogoutBtn);
       bookmarksView.addHandlerRender(controlBookmarks);
+      model.setLoginHash(userData);
     } else {
       setTimeout(() => {
         loginView.renderError();
@@ -58,12 +58,34 @@ const controlUserLogin = async function (userData) {
   }
 };
 
+const controlPersisLogin = function () {
+  model.persistLogin();
+
+  if (model.state.isAdmin) {
+    helpers.clearNav();
+    helpers.addSessionUserName();
+    helpers.addCustomRecipeBtn();
+    helpers.addLogoutBtn();
+    helpers.addlogoutEvListner(controlLogoutBtn);
+    addRecipeView.addHandlerUpload(controlAddRecipe);
+    addRecipeView.init();
+  } else if (model.state.isUser) {
+    helpers.clearNav();
+    helpers.addSessionUserName();
+    helpers.addBookmarksBtn();
+    helpers.addLogoutBtn();
+    helpers.addlogoutEvListner(controlLogoutBtn);
+    bookmarksView.addHandlerRender(controlBookmarks);
+  }
+};
+
 const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
 const controlLogoutBtn = function () {
   try {
+    helpers.clearHash();
     helpers.clearNav();
     helpers.addloginBtn();
     helpers.addRegistrationpBtn();
@@ -78,10 +100,8 @@ const init = function () {
   addUserView.addHandlerUploadUser(controlAddUser);
   loginView.addHandlerLoginUser(controlUserLogin);
 
-  const userFlag = localStorage.getItem('userFlag');
-  const adminFlag = localStorage.getItem('adminFlag');
-  if (adminFlag !== 'true') initAdmins();
-  if (userFlag !== 'true') initUsers();
+  model.setLocalStorage();
+  controlPersisLogin();
 };
 
 init();

@@ -133,3 +133,7 @@ export const addlogoutEvListner = function (handler) {
     handler();
   });
 };
+
+export const clearHash = function () {
+  window.location.hash = '';
+};

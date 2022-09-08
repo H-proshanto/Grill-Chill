@@ -7,6 +7,7 @@ class BookmarksView extends View {
   _message = '';
 
   addHandlerRender(handler) {
+    this._parentEl = document.querySelector('.bookmarks__list');
     window.addEventListener('load', handler);
   }
 

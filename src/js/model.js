@@ -1,3 +1,6 @@
+import { initAdmins } from './data/admins.js';
+import { initUsers } from './data/users.js';
+
 export const state = {
   username: '',
   recipe: {},
@@ -71,4 +74,51 @@ export const uploadRecipe = async function (newRecipe) {
   } catch (err) {
     throw err;
   }
+};
+
+export const setLoginHash = function (userData) {
+  const admins = JSON.parse(localStorage.getItem('admins'));
+  const users = JSON.parse(localStorage.getItem('users'));
+
+  for (let i = 0; i < admins.length; i++) {
+    if (
+      admins[i].username === userData.username &&
+      admins[i].password === userData.password
+    ) {
+      window.location.hash = `156ad4A` + i.toString();
+    }
+  }
+
+  for (let i = 0; i < users.length; i++) {
+    if (
+      users[i].username === userData.username &&
+      users[i].password === userData.password
+    ) {
+      window.location.hash = `156ad4U` + i.toString();
+    }
+  }
+};
+
+export const persistLogin = function () {
+  const hash = window.location.hash;
+  if (hash !== '' && hash.includes('156ad4')) {
+    const lastIndex = hash.length - 1;
+    if (hash[lastIndex - 1] === 'A') {
+      const admins = JSON.parse(localStorage.getItem('admins'));
+      state.isAdmin = true;
+      state.username = admins[Number(hash[lastIndex])].username;
+    } else if (hash[lastIndex - 1] === 'U') {
+      const users = JSON.parse(localStorage.getItem('users'));
+      state.isUser = true;
+      state.bookmarks = users[Number(hash[lastIndex])].bookmarks;
+      state.username = users[Number(hash[lastIndex])].username;
+    }
+  }
+};
+
+export const setLocalStorage = function () {
+  const userFlag = localStorage.getItem('userFlag');
+  const adminFlag = localStorage.getItem('adminFlag');
+  if (adminFlag !== 'true') initAdmins();
+  if (userFlag !== 'true') initUsers();
 };
