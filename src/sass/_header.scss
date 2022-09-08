@@ -13,6 +13,8 @@
 }
 
 .search {
+  position:absolute;
+  right: 74.6rem;
   background-color: #fff;
   border-radius: 0.5rem;
   display: flex;
@@ -31,7 +33,7 @@
     font-family: inherit;
     color: inherit;
     font-size: 1.7rem;
-    width: 30rem;
+    width: 31rem;
 
     &:focus {
       outline: none;
