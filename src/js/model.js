@@ -1,5 +1,6 @@
 import { initAdmins } from './data/admins.js';
 import { initUsers } from './data/users.js';
+import { initRecipes } from './data/recipes.js';
 
 export const state = {
   username: '',
@@ -119,6 +120,9 @@ export const persistLogin = function () {
 export const setLocalStorage = function () {
   const userFlag = localStorage.getItem('userFlag');
   const adminFlag = localStorage.getItem('adminFlag');
+  const recipesFlag = localStorage.getItem('recipesFlag');
+
   if (adminFlag !== 'true') initAdmins();
   if (userFlag !== 'true') initUsers();
+  if (recipesFlag !== 'true') initRecipes();
 };
