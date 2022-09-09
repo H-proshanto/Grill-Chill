@@ -1,5 +1,5 @@
 import View from './view.js';
-import { refresh } from '../config.js';
+import { REFRESH } from '../config.js';
 
 class AddUserView extends View {
   _parentEl = document.querySelector('.registration__form');
@@ -34,7 +34,7 @@ class AddUserView extends View {
       setTimeout(() => {
         this._clear();
         this._parentEl.innerHTML = this._generateMarkup();
-      }, refresh);
+      }, REFRESH);
     }
   }
 

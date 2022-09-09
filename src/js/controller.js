@@ -5,7 +5,7 @@ import addUserView from './views/addUserView.js';
 import loginView from './views/loginView.js';
 import bookmarksView from './views/bookmarksView.js';
 
-import { msgLoadTime } from './config.js';
+import { MSG_LOAD_TIME } from './config.js';
 
 const controlAddRecipe = async function (newRecipe) {
   try {
@@ -19,7 +19,10 @@ const controlAddUser = async function (newUser) {
   try {
     model.uploadedUser(newUser);
     addUserView.renderSpinner();
-    setTimeout(addUserView.renderMessage.bind(addUserView), msgLoadTime * 1000);
+    setTimeout(
+      addUserView.renderMessage.bind(addUserView),
+      MSG_LOAD_TIME * 1000
+    );
   } catch (err) {
     addUserView.renderError();
     console.error(err);
@@ -51,7 +54,7 @@ const controlUserLogin = async function (userData) {
     } else {
       setTimeout(() => {
         loginView.renderError();
-      }, msgLoadTime * 600);
+      }, MSG_LOAD_TIME * 600);
     }
   } catch (err) {
     console.error(err);

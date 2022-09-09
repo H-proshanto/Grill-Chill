@@ -1,6 +1,6 @@
 import View from './view.js';
 import icons from 'url:../../img/icons.svg';
-import { refresh } from '../config.js';
+import { REFRESH } from '../config.js';
 
 class LoginView extends View {
   _parentEl = document.querySelector('.login__form');
@@ -37,7 +37,7 @@ class LoginView extends View {
       setTimeout(() => {
         this._clear();
         this._parentEl.innerHTML = this._generateMarkup();
-      }, refresh);
+      }, REFRESH);
     }
   }
 

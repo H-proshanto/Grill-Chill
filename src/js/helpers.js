@@ -2,7 +2,7 @@ import loginView from './views/loginView';
 import icons from '../img/icons.svg';
 
 import { state } from './model';
-import { msgLoadTime } from './config';
+import { MSG_LOAD_TIME } from './config';
 
 export const addloginBtn = function () {
   const parentEl = document.querySelector('.nav__list');
@@ -120,11 +120,11 @@ export const clearNav = function () {
 export const hideButtonsAndModal = function () {
   clearNav();
 
-  setTimeout(loginView.renderMessage.bind(loginView), msgLoadTime * 1000);
+  setTimeout(loginView.renderMessage.bind(loginView), MSG_LOAD_TIME * 1000);
   setTimeout(() => {
     loginView.renderMessage();
-    setTimeout(loginView.toogleWindow.bind(loginView), msgLoadTime * 220);
-  }, msgLoadTime * 1000);
+    setTimeout(loginView.toogleWindow.bind(loginView), MSG_LOAD_TIME * 220);
+  }, MSG_LOAD_TIME * 1000);
 };
 
 export const addlogoutEvListner = function (handler) {

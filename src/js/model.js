@@ -1,6 +1,7 @@
 import { initAdmins } from './data/admins.js';
 import { initUsers } from './data/users.js';
 import { initRecipes } from './data/recipes.js';
+import { RES_PER_PAGE } from './config.js';
 
 export const state = {
   username: '',
@@ -8,7 +9,7 @@ export const state = {
   search: {
     query: '',
     results: [],
-    // resultsPerPage: RES_PER_PAGE,
+    resultsPerPage: RES_PER_PAGE,
     page: 1,
   },
   bookmarks: [],
