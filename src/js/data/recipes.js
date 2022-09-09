@@ -292,6 +292,31 @@ const recipe11 = {
   ],
 };
 
+const recipe12 = {
+  cookingTime: 45,
+  id: 'BURGERitem0',
+  image: 'http://forkify-api.herokuapp.com/images/681635_MEDIUMde80.jpg',
+  publisher: 'BBC Good Food',
+  servings: 4,
+  sourceUrl: 'http://www.bbcgoodfood.com/recipes/681635/bbq-chicken-burgers',
+  title: 'BBQ chicken burgers',
+  ingredients: [
+    { quantity: 4, unit: '', description: 'skinless boneless chicken breasts' },
+    { quantity: 4, unit: '', description: 'rashers bacon' },
+    { quantity: 4, unit: '', description: 'large burger buns sliced in half' },
+    {
+      quantity: null,
+      unit: '',
+      description: 'Lettuce tomato and red onion to serve',
+    },
+    { quantity: 4, unit: 'tbsps', description: 'tomato ketchup' },
+    { quantity: 4, unit: 'tbsps', description: 'brown sauce' },
+    { quantity: null, unit: '', description: 'Splash chilli sauce' },
+    { quantity: 2, unit: 'tsps', description: 'clear honey' },
+    { quantity: 2, unit: '', description: 'garlic cloves crushed' },
+  ],
+};
+
 const recipes = [
   recipe1,
   recipe2,
@@ -304,6 +329,7 @@ const recipes = [
   recipe9,
   recipe10,
   recipe11,
+  recipe12,
 ];
 
 export const initRecipes = function () {

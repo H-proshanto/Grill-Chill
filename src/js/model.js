@@ -29,6 +29,7 @@ export const loadSearchResults = async function (query) {
         title: recipe.title,
         publisher: recipe.publisher,
         image: recipe.image,
+        isAdmin: state.isAdmin,
       };
     });
     state.search.page = 1;
@@ -36,6 +37,13 @@ export const loadSearchResults = async function (query) {
     console.error(`${err} 💥`);
     throw err;
   }
+};
+
+export const updateResultState = function () {
+  console.log(state.isAdmin);
+  state.search.results.forEach(result => {
+    result.isAdmin = state.isAdmin;
+  });
 };
 
 export const isAuthenticated = function (userData) {

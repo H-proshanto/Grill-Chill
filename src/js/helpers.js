@@ -137,3 +137,13 @@ export const addlogoutEvListner = function (handler) {
 export const clearHash = function () {
   window.location.hash = '';
 };
+
+export const hideMessage = function () {
+  document.querySelector('.message').classList.add('hidden');
+};
+
+export const showMessage = function () {
+  parentEl = document.querySelector('.message');
+  if (parentEl.classList.contains('hidden'))
+    parentEl.classList.remove('hidden');
+};

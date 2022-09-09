@@ -7,10 +7,11 @@ import bookmarksView from './views/bookmarksView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 
-import { MSG_LOAD_TIME } from './config.js';
+import { MSG_LOAD_TIME, REFRESH } from './config.js';
 
 const controlSearchResults = async function () {
   try {
+    helpers.hideMessage();
     resultsView.renderSpinner();
 
     const query = searchView.getQuery();
@@ -23,7 +24,10 @@ const controlSearchResults = async function () {
     if (!query) return;
 
     await model.loadSearchResults(query);
-    resultsView.render(model.state.search.results);
+
+    setTimeout(function () {
+      resultsView.render(model.state.search.results);
+    }, REFRESH);
   } catch (err) {
     console.log(err);
   }
@@ -65,6 +69,8 @@ const controlUserLogin = async function (userData) {
       addRecipeView.addHandlerUpload(controlAddRecipe);
       addRecipeView.init();
       model.setLoginHash(userData);
+      resultsView.refresh();
+      helpers.showMessage();
     } else if (model.state.isUser) {
       helpers.hideButtonsAndModal();
       helpers.addSessionUserName();
@@ -73,6 +79,8 @@ const controlUserLogin = async function (userData) {
       helpers.addlogoutEvListner(controlLogoutBtn);
       bookmarksView.addHandlerRender(controlBookmarks);
       model.setLoginHash(userData);
+      resultsView.refresh();
+      helpers.showMessage();
     } else {
       setTimeout(() => {
         loginView.renderError();
@@ -83,7 +91,7 @@ const controlUserLogin = async function (userData) {
   }
 };
 
-const controlPersisLogin = function () {
+const controlPersistLogin = function () {
   model.persistLogin();
 
   if (model.state.isAdmin) {
@@ -117,6 +125,8 @@ const controlLogoutBtn = function () {
     loginView.refreshBtn();
     addUserView.refreshBtn();
     model.refreshSession();
+    resultsView.refresh();
+    helpers.showMessage();
   } catch (err) {
     console.error(err);
   }
@@ -128,7 +138,7 @@ const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
 
   model.setLocalStorage();
-  controlPersisLogin();
+  controlPersistLogin();
 };
 
 init();
