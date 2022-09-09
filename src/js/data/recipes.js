@@ -229,8 +229,7 @@ const recipe8 = {
 const recipe9 = {
   cookingTime: 75,
   id: 'PIZZAitem8',
-  image:
-    'https://images.unsplash.com/photo-1593504049359-74330189a345…aG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=327&q=80',
+  image: 'http://forkify-api.herokuapp.com/images/580542e3ec.jpg',
   publisher: 'Proshanto Lal',
   servings: 3,
   sourceUrl: 'https://recipes.timesofindia.com/recipes/pizza/rs56933159.cms',

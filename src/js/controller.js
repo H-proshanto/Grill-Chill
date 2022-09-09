@@ -4,8 +4,30 @@ import addRecipeView from './views/addRecipeView.js';
 import addUserView from './views/addUserView.js';
 import loginView from './views/loginView.js';
 import bookmarksView from './views/bookmarksView.js';
+import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 
 import { MSG_LOAD_TIME } from './config.js';
+
+const controlSearchResults = async function () {
+  try {
+    resultsView.renderSpinner();
+
+    const query = searchView.getQuery();
+
+    if (query === '') {
+      setTimeout(function () {
+        resultsView.renderMessage('⚠️ Invalid Token , Please Try Again !');
+      }, 1);
+    }
+    if (!query) return;
+
+    await model.loadSearchResults(query);
+    resultsView.render(model.state.search.results);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const controlAddRecipe = async function (newRecipe) {
   try {
@@ -103,6 +125,7 @@ const controlLogoutBtn = function () {
 const init = function () {
   addUserView.addHandlerUploadUser(controlAddUser);
   loginView.addHandlerLoginUser(controlUserLogin);
+  searchView.addHandlerSearch(controlSearchResults);
 
   model.setLocalStorage();
   controlPersisLogin();

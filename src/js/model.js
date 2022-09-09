@@ -17,6 +17,27 @@ export const state = {
   isUser: false,
 };
 
+export const loadSearchResults = async function (query) {
+  try {
+    state.search.query = query;
+
+    const data = await searchLocalStorage(query);
+
+    state.search.results = data.map(recipe => {
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        image: recipe.image,
+      };
+    });
+    state.search.page = 1;
+  } catch (err) {
+    console.error(`${err} 💥`);
+    throw err;
+  }
+};
+
 export const isAuthenticated = function (userData) {
   const admins = JSON.parse(localStorage.getItem('admins'));
   const users = JSON.parse(localStorage.getItem('users'));
@@ -126,6 +147,18 @@ export const setLocalStorage = function () {
   if (adminFlag !== 'true') initAdmins();
   if (userFlag !== 'true') initUsers();
   if (recipesFlag !== 'true') initRecipes();
+};
+
+const searchLocalStorage = async function (query) {
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+  query = query.toUpperCase();
+  let result = [];
+
+  recipes.forEach(recipe => {
+    if (recipe.id.includes(query)) result.push(recipe);
+  });
+
+  return result;
 };
 
 export const refreshSession = function () {
