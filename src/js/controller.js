@@ -94,6 +94,7 @@ const controlLogoutBtn = function () {
     helpers.addRegistrationpBtn();
     loginView.refreshBtn();
     addUserView.refreshBtn();
+    model.refreshSession();
   } catch (err) {
     console.error(err);
   }

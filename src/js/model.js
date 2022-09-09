@@ -127,3 +127,15 @@ export const setLocalStorage = function () {
   if (userFlag !== 'true') initUsers();
   if (recipesFlag !== 'true') initRecipes();
 };
+
+export const refreshSession = function () {
+  state.username = '';
+  state.recipe = {};
+  state.search.query = '';
+  state.search.results = [];
+  state.search.resultsPerPage = RES_PER_PAGE;
+  state.search.page = 1;
+  state.bookmarks = [];
+  state.isAdmin = false;
+  state.isUser = false;
+};
