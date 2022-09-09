@@ -6,6 +6,7 @@ import loginView from './views/loginView.js';
 import bookmarksView from './views/bookmarksView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 import { MSG_LOAD_TIME, REFRESH } from './config.js';
 
@@ -26,7 +27,8 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     setTimeout(function () {
-      resultsView.render(model.state.search.results);
+      resultsView.render(model.getSearchResultsPage());
+      paginationView.render(model.state.search);
     }, REFRESH);
   } catch (err) {
     console.log(err);
@@ -69,8 +71,9 @@ const controlUserLogin = async function (userData) {
       addRecipeView.addHandlerUpload(controlAddRecipe);
       addRecipeView.init();
       model.setLoginHash(userData);
-      resultsView.refresh();
       helpers.showMessage();
+      resultsView.refresh();
+      paginationView.refresh();
     } else if (model.state.isUser) {
       helpers.hideButtonsAndModal();
       helpers.addSessionUserName();
@@ -79,8 +82,9 @@ const controlUserLogin = async function (userData) {
       helpers.addlogoutEvListner(controlLogoutBtn);
       bookmarksView.addHandlerRender(controlBookmarks);
       model.setLoginHash(userData);
-      resultsView.refresh();
       helpers.showMessage();
+      resultsView.refresh();
+      paginationView.refresh();
     } else {
       setTimeout(() => {
         loginView.renderError();
@@ -116,6 +120,11 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlPagination = function (goToPage) {
+  resultsView.render(model.getSearchResultsPage(goToPage));
+  paginationView.render(model.state.search);
+};
+
 const controlLogoutBtn = function () {
   try {
     helpers.clearHash();
@@ -125,8 +134,9 @@ const controlLogoutBtn = function () {
     loginView.refreshBtn();
     addUserView.refreshBtn();
     model.refreshSession();
-    resultsView.refresh();
     helpers.showMessage();
+    resultsView.refresh();
+    paginationView.refresh();
   } catch (err) {
     console.error(err);
   }
@@ -136,6 +146,7 @@ const init = function () {
   addUserView.addHandlerUploadUser(controlAddUser);
   loginView.addHandlerLoginUser(controlUserLogin);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 
   model.setLocalStorage();
   controlPersistLogin();

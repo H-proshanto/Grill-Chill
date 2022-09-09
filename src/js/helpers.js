@@ -139,11 +139,12 @@ export const clearHash = function () {
 };
 
 export const hideMessage = function () {
-  document.querySelector('.message').classList.add('hidden');
+  parentEl = document.querySelector('.search-message');
+  if (!parentEl.classList.contains('hidden')) parentEl.classList.add('hidden');
 };
 
 export const showMessage = function () {
-  parentEl = document.querySelector('.message');
+  parentEl = document.querySelector('.search-message');
   if (parentEl.classList.contains('hidden'))
     parentEl.classList.remove('hidden');
 };

@@ -8,3 +8,23 @@
   list-style: none;
   margin-bottom: 2rem;
 }
+
+.pagination {
+  border-radius: 0.5rem;
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  &__btn {
+    border-radius: 0.5rem;
+    &--prev {
+      float: left;
+    }
+    &--next {
+      float: right;
+    }
+  }
+}
