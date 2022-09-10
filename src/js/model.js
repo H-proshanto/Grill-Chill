@@ -233,3 +233,28 @@ export const setCookingTime = function (time) {
   state.recipe = changedRecipe;
   localStorage.setItem('recipes', JSON.stringify(recipes));
 };
+
+export const deleteCurrentRecipe = function () {
+  const id = window.location.hash.slice(1);
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+  let index;
+
+  for (let i = 0; i < recipes.length; i++) {
+    if (recipes[i].id === id) {
+      index = i;
+    }
+  }
+
+  recipes.splice(index, 1);
+  localStorage.setItem('recipes', JSON.stringify(recipes));
+  state.search.results = recipes.map(recipe => {
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      publisher: recipe.publisher,
+      image: recipe.image,
+      isAdmin: state.isAdmin,
+    };
+  });
+  window.location.hash = '';
+};

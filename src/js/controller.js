@@ -180,12 +180,20 @@ const controlChangeCookingTime = function (data) {
   recipeView.update(model.state.recipe);
 };
 
+const controlDeleteRecipe = function () {
+  deleteItemConfimationView.toogleWindow();
+  model.deleteCurrentRecipe();
+  recipeView.refresh();
+  resultsView.update(model.getSearchResultsPage());
+};
+
 const init = function () {
   addUserView.addHandlerUploadUser(controlAddUser);
   loginView.addHandlerLoginUser(controlUserLogin);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerRender(controlRecipes);
+  deleteItemConfimationView.addHandlerConfirm(controlDeleteRecipe);
 
   model.setLocalStorage();
   controlPersistLogin();

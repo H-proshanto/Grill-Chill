@@ -40,18 +40,10 @@ class DeleteItemConfirmationView extends View {
   }
 
   addHandlerConfirm(handler) {
-    if (this.calledAddHandlerConfirm === undefined) {
-      this._btnConfirm.addEventListener('click', function (e) {
-        e.preventDefault();
-        const data = document.querySelector('.confirmation__input').value;
-        if (data === '') {
-          window.alert('Input field is empty');
-          return;
-        }
-        handler(data);
-      });
-      this.calledAddHandlerConfirm = true;
-    }
+    this._btnConfirm.addEventListener('click', function (e) {
+      e.preventDefault();
+      handler();
+    });
   }
 }
 
