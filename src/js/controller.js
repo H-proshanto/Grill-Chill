@@ -75,7 +75,11 @@ const controlAddRecipe = async function (newRecipe) {
 
     setTimeout(function () {
       addRecipeView.renderMessage();
+      model.state.recipe.isAdmin = true;
       recipeView.render(model.state.recipe);
+      confirmationView.init();
+      confirmationView.addHandlerConfirm(controlChangeCookingTime);
+      helpers.hideBookmark();
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
     }, MSG_LOAD_TIME * 1200);
   } catch (err) {
