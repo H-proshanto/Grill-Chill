@@ -49,7 +49,6 @@ export const getSearchResultsPage = function (page = state.search.page) {
 };
 
 export const updateResultState = function () {
-  console.log(state.isAdmin);
   state.search.results.forEach(result => {
     result.isAdmin = state.isAdmin;
   });
@@ -137,11 +136,13 @@ export const setLoginHash = function (userData) {
       window.location.hash = `156ad4U` + i.toString();
     }
   }
+  localStorage.setItem('loginHash', window.location.hash.slice(1));
 };
 
 export const persistLogin = function () {
-  const hash = window.location.hash;
-  if (hash !== '' && hash.includes('156ad4')) {
+  const hash = localStorage.getItem('loginHash');
+
+  if (hash !== null && hash.includes('156ad4')) {
     const lastIndex = hash.length - 1;
     if (hash[lastIndex - 1] === 'A') {
       const admins = JSON.parse(localStorage.getItem('admins'));
@@ -178,6 +179,17 @@ const searchLocalStorage = async function (query) {
   return result;
 };
 
+const searchLocalStorageRecipe = async function (id) {
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+  let data;
+
+  recipes.forEach(recipe => {
+    if (recipe.id === id) data = recipe;
+  });
+
+  return data;
+};
+
 export const refreshSession = function () {
   state.username = '';
   state.recipe = {};
@@ -188,4 +200,36 @@ export const refreshSession = function () {
   state.bookmarks = [];
   state.isAdmin = false;
   state.isUser = false;
+  localStorage.removeItem('loginHash');
+};
+
+export const loadRecipe = async function (id) {
+  try {
+    const data = await searchLocalStorageRecipe(id);
+    state.recipe = data;
+    if (state.isAdmin) state.recipe.isAdmin = true;
+
+    if (state.bookmarks.some(bookmark => bookmark.id === id))
+      state.recipe.bookmarked = true;
+    else state.recipe.bookmarked = false;
+  } catch (err) {
+    console.error(`${err} 💥💥💥💥`);
+    throw err;
+  }
+};
+
+export const setCookingTime = function (time) {
+  const id = window.location.hash.slice(1);
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+  let changedRecipe;
+
+  recipes.forEach(recipe => {
+    if (recipe.id === id) {
+      recipe.cookingTime = time;
+      changedRecipe = recipe;
+    }
+  });
+
+  state.recipe = changedRecipe;
+  localStorage.setItem('recipes', JSON.stringify(recipes));
 };

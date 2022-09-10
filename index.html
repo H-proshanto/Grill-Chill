@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700"
       rel="stylesheet"
@@ -62,7 +65,18 @@
         <ul class="results"></ul>
 
         <div class="pagination"></div>
-        
+
+        <!-- <p class="copyright">
+          &copy; Copyright by
+          <a
+            class="facebook-link"
+            target="_blank"
+            href="https://www.facebook.com/proshanto.rivera.3/"
+            >Proshanto Lal</a
+          >. For learning purpose. Added my own functionalities but the project
+          is not mine fully.
+        </p> -->
+      </div>
 
       <div class="recipe">
         <div class="message search-message">
@@ -174,9 +188,14 @@
         <label>Username</label>
         <input type="text" required placeholder="User Name" name="username" />
         <label>Password</label>
-        <input type="password" required placeholder="Password" name="password" />
+        <input
+          type="password"
+          required
+          placeholder="Password"
+          name="password"
+        />
         <label>Email Address</label>
-        <input type="email" required placeholder="Email Address" name="email"/>
+        <input type="email" required placeholder="Email Address" name="email" />
         <button class="btn registration-btn">Register &rarr;</button>
       </form>
     </div>
@@ -187,10 +206,47 @@
       <h2 class="login__header">Welcome back, Please log in to continue</h2>
       <form class="login__form">
         <label>Username</label>
-        <input type="text" required placeholder="User Name" name="username"/>
+        <input type="text" required placeholder="User Name" name="username" />
         <label>Password</label>
-        <input type="password" required placeholder="Password" name="password" />
+        <input
+          type="password"
+          required
+          placeholder="Password"
+          name="password"
+        />
         <button class="btn login-btn">Log In</button>
+      </form>
+    </div>
+    <div class="confirmation-overlay hidden"></div>
+    <div class="confirmation-window hidden">
+      <form class="confirmation__form">
+        <label>Set Cooking Time</label>
+        <input
+          type="text"
+          placeholder="Cooking Time"
+          class="confirmation__input"
+        />
+        <button class="btn--confirm">
+          <svg>
+            <use href="src/img/icons.svg#icon-check"></use>
+          </svg>
+          <span>Confirm</span>
+        </button>
+        <button class="btn--cancel">Cancel</button>
+      </form>
+    </div>
+
+    <div class="confirm-delete-overlay hidden"></div>
+    <div class="confirm-delete-window hidden">
+      <form class="confirm-delete__form">
+        <label>Are you sure you want to delete this recipe ?</label>
+        <button class="btn--confirm-delete">
+          <svg>
+            <use href="src/img/icons.svg#icon-check"></use>
+          </svg>
+          <span>Confirm</span>
+        </button>
+        <button class="btn--confirm-delete-cancel">Cancel</button>
       </form>
     </div>
   </body>
