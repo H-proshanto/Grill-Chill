@@ -187,12 +187,19 @@ const controlDeleteRecipe = function () {
   resultsView.update(model.getSearchResultsPage());
 };
 
+const controlServings = function (newServings) {
+  model.updateServings(newServings);
+
+  recipeView.update(model.state.recipe);
+};
+
 const init = function () {
-  addUserView.addHandlerUploadUser(controlAddUser);
-  loginView.addHandlerLoginUser(controlUserLogin);
   searchView.addHandlerSearch(controlSearchResults);
-  paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdateServings(controlServings);
+  paginationView.addHandlerClick(controlPagination);
+  loginView.addHandlerLoginUser(controlUserLogin);
+  addUserView.addHandlerUploadUser(controlAddUser);
   deleteItemConfimationView.addHandlerConfirm(controlDeleteRecipe);
 
   model.setLocalStorage();

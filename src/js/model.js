@@ -258,3 +258,11 @@ export const deleteCurrentRecipe = function () {
   });
   window.location.hash = '';
 };
+
+export const updateServings = function (newServings) {
+  state.recipe.ingredients.forEach(ing => {
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+  });
+
+  state.recipe.servings = newServings;
+};
