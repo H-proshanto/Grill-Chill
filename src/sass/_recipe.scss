@@ -5,6 +5,7 @@
     height: 32rem;
     position: relative;
     transform-origin: top;
+    background-image: $grad2;
 
     &::before {
       content: '';
@@ -14,12 +15,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      background-image: linear-gradient(
-        to right bottom,
-        $color-grad-1,
-        $color-grad-2
-      );
-      opacity: 0.6;
+      background-image: $grad2;
+      opacity: 0.65;
     }
   }
 
@@ -47,11 +44,7 @@
       -webkit-box-decoration-break: clone;
       box-decoration-break: clone;
       padding: 1.3rem 2rem;
-      background-image: linear-gradient(
-        to right bottom,
-        $color-grad-1,
-        $color-grad-2
-      );
+      background-image: $grad2;
     }
 
     @media only screen and (max-width: $bp-medium) {
@@ -92,26 +85,6 @@
     display: flex;
     margin-left: 1.6rem;
     transform: translateY(-1px);
-  }
-
-  &__user-generated {
-    background-color: darken($color-grey-light-2, 2%);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 4rem;
-    width: 4rem;
-    border-radius: 10rem;
-
-    margin-left: auto;
-    margin-right: 1.75rem;
-
-    svg {
-      height: 2.25rem;
-      width: 2.25rem;
-      fill: $color-primary;
-    }
   }
 
   &__ingredients {

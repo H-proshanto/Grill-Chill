@@ -93,7 +93,11 @@
 }
 
 .btn--round {
-  background-image: $gradient;
+  background-image: linear-gradient(
+    to right bottom,
+    $color-grad-7,
+    $color-grad-4
+  );
   border-radius: 50%;
   border: none;
   cursor: pointer;

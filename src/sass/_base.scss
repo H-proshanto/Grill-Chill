@@ -5,6 +5,7 @@ $color-grad-3: #3d72e4ea;
 $color-grad-4: #4fc8d1ea;
 $color-grad-5: #ff184aea;
 $color-grad-6: #444444ea;
+$color-grad-7: #fbdb89;
 
 $color-grey-light-1: #f9f5f3;
 $color-grey-light-2: #f2efee;
@@ -15,6 +16,7 @@ $color-grey-dark-2: #918581;
 $gradient: linear-gradient(to right bottom, $color-grad-1, $color-grad-2);
 $grad: linear-gradient(to right bottom, $color-grad-3, $color-grad-4);
 $grad1: linear-gradient(to right bottom, $color-grad-5, $color-grad-6);
+$grad2: linear-gradient(to right bottom, $color-grad-7, $color-grad-5);
 
 $bp-large: 78.15em;
 $bp-medium: 61.25em;

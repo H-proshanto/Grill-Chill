@@ -60,6 +60,7 @@ const controlRecipes = async function () {
       confirmationView.init();
       confirmationView.addHandlerConfirm(controlChangeCookingTime);
     }
+    if (!model.state.isUser) helpers.hideBookmark();
   } catch (error) {
     recipeView.renderError();
     console.error(err);

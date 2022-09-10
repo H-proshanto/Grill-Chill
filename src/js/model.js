@@ -123,7 +123,6 @@ export const uploadRecipe = async function (newRecipe) {
     recipes.push(recipe);
     localStorage.setItem('recipes', JSON.stringify(recipes));
     state.recipe = recipe;
-    console.log('okay');
   } catch (err) {
     throw err;
   }
