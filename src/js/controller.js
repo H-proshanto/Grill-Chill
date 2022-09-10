@@ -204,6 +204,7 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   recipeView.update(model.state.recipe);
+  if (!model.state.isUser) helpers.hideBookmark();
 };
 
 const controlAddBookmark = function () {
