@@ -92,7 +92,9 @@ class RecipeView extends View {
           </svg>
         </button>
       </button>
-        <button class="btn--round btn--bookmark">
+        <button class="btn--round btn--bookmark ${
+          this._data.isAdmin ? 'hidden' : ''
+        }">
           <svg class="">
             <use href="${icons}#icon-bookmark${
       this._data.bookmarked ? '-fill' : ''

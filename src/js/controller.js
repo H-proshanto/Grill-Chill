@@ -50,7 +50,7 @@ const controlRecipes = async function () {
 
     resultsView.update(model.getSearchResultsPage());
 
-    bookmarksView.update(model.state.bookmarks);
+    if (model.state.isUser) bookmarksView.update(model.state.bookmarks);
 
     await model.loadRecipe(id);
     const { recipe } = model.state;
@@ -72,11 +72,11 @@ const controlAddRecipe = async function (newRecipe) {
 
     await model.uploadRecipe(newRecipe);
 
-    recipeView.render(model.state.recipe);
-
-    addRecipeView.renderMessage();
-
-    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+    setTimeout(function () {
+      addRecipeView.renderMessage();
+      recipeView.render(model.state.recipe);
+      window.history.pushState(null, '', `#${model.state.recipe.id}`);
+    }, MSG_LOAD_TIME * 1200);
   } catch (err) {
     console.error(err);
     addRecipeView.renderError(err.message);

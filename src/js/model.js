@@ -100,20 +100,30 @@ export const uploadRecipe = async function (newRecipe) {
 
         return { quantity: quantity ? +quantity : null, unit, description };
       });
-    console.log(ingredients);
 
-    // const recipe = {
-    //   title: newRecipe.title,
-    //   source_url: newRecipe.sourceUrl,
-    //   image_url: newRecipe.image,
-    //   publisher: newRecipe.publisher,
-    //   cooking_time: +newRecipe.cookingTime,
-    //   servings: +newRecipe.servings,
-    //   ingredients,
-    // };
+    const recipe = {
+      title: newRecipe.title,
+      sourceUrl: newRecipe.sourceUrl,
+      image: newRecipe.image,
+      publisher: newRecipe.publisher,
+      cookingTime: +newRecipe.cookingTime,
+      servings: +newRecipe.servings,
+      ingredients,
+    };
 
-    // const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
-    // state.recipe = createRecipeObject(data);
+    const recipes = JSON.parse(localStorage.getItem('recipes'));
+    const size = recipes.length - 1;
+    const title = recipe.title.toUpperCase();
+    if (title.includes('BURGER')) {
+      recipe.id = 'BURGERitem' + size.toString();
+    } else if (title.includes('PIZZA')) {
+      recipe.id = 'PIZZAitem' + size.toString();
+    }
+
+    recipes.push(recipe);
+    localStorage.setItem('recipes', JSON.stringify(recipes));
+    state.recipe = recipe;
+    console.log('okay');
   } catch (err) {
     throw err;
   }
