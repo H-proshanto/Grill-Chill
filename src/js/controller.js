@@ -80,7 +80,6 @@ const controlAddRecipe = async function (newRecipe) {
     }, MSG_LOAD_TIME * 1200);
   } catch (err) {
     console.error(err);
-    addRecipeView.renderError(err.message);
   }
 };
 
