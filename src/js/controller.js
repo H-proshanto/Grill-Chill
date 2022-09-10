@@ -50,7 +50,7 @@ const controlRecipes = async function () {
 
     resultsView.update(model.getSearchResultsPage());
 
-    // bookmarksView.update(model.state.bookmarks);
+    bookmarksView.update(model.state.bookmarks);
 
     await model.loadRecipe(id);
     const { recipe } = model.state;
@@ -68,9 +68,18 @@ const controlRecipes = async function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
-    console.log('addRecipe');
+    addRecipeView.renderSpinner();
+
+    await model.uploadRecipe(newRecipe);
+
+    recipeView.render(model.state.recipe);
+
+    addRecipeView.renderMessage();
+
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
   } catch (err) {
     console.error(err);
+    addRecipeView.renderError(err.message);
   }
 };
 
@@ -113,6 +122,8 @@ const controlUserLogin = async function (userData) {
       helpers.addlogoutEvListner(controlLogoutBtn);
       bookmarksView.addHandlerRender(controlBookmarks);
       model.setLoginHash(userData);
+      model.setBookmarks();
+      bookmarksView.render(model.state.bookmarks);
       recipeView.refresh();
       resultsView.refresh();
       paginationView.refresh();
@@ -144,6 +155,7 @@ const controlPersistLogin = function () {
     helpers.addLogoutBtn();
     helpers.addlogoutEvListner(controlLogoutBtn);
     bookmarksView.addHandlerRender(controlBookmarks);
+    bookmarksView.render(model.state.bookmarks);
   }
 };
 
@@ -193,10 +205,20 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
+const controlAddBookmark = function () {
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id);
+
+  recipeView.update(model.state.recipe);
+
+  bookmarksView.render(model.state.bookmarks);
+};
+
 const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
   paginationView.addHandlerClick(controlPagination);
   loginView.addHandlerLoginUser(controlUserLogin);
   addUserView.addHandlerUploadUser(controlAddUser);

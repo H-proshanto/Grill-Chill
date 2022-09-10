@@ -100,16 +100,20 @@ export const uploadRecipe = async function (newRecipe) {
 
         return { quantity: quantity ? +quantity : null, unit, description };
       });
+    console.log(ingredients);
 
-    const recipe = {
-      title: newRecipe.title,
-      source_url: newRecipe.sourceUrl,
-      image_url: newRecipe.image,
-      publisher: newRecipe.publisher,
-      cooking_time: +newRecipe.cookingTime,
-      servings: +newRecipe.servings,
-      ingredients,
-    };
+    // const recipe = {
+    //   title: newRecipe.title,
+    //   source_url: newRecipe.sourceUrl,
+    //   image_url: newRecipe.image,
+    //   publisher: newRecipe.publisher,
+    //   cooking_time: +newRecipe.cookingTime,
+    //   servings: +newRecipe.servings,
+    //   ingredients,
+    // };
+
+    // const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
+    // state.recipe = createRecipeObject(data);
   } catch (err) {
     throw err;
   }
@@ -265,4 +269,38 @@ export const updateServings = function (newServings) {
   });
 
   state.recipe.servings = newServings;
+};
+
+const persistBookmarks = function () {
+  const hash = localStorage.getItem('loginHash');
+  const lastIndex = hash.length - 1;
+  const users = JSON.parse(localStorage.getItem('users'));
+
+  users[Number(hash[lastIndex])].bookmarks = state.bookmarks;
+  localStorage.setItem('users', JSON.stringify(users));
+};
+
+export const addBookmark = function (recipe) {
+  state.bookmarks.push(recipe);
+
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+
+  persistBookmarks();
+};
+
+export const deleteBookmark = function (id) {
+  const index = state.bookmarks.findIndex(el => el.id === id);
+  state.bookmarks.splice(index, 1);
+
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
+
+  persistBookmarks();
+};
+
+export const setBookmarks = function () {
+  const hash = localStorage.getItem('loginHash');
+  const lastIndex = hash.length - 1;
+  const users = JSON.parse(localStorage.getItem('users'));
+
+  state.bookmarks = users[Number(hash[lastIndex])].bookmarks;
 };

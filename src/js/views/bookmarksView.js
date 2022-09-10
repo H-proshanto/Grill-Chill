@@ -1,4 +1,5 @@
 import View from './view.js';
+import previewView from './previewView.js';
 
 class BookmarksView extends View {
   _parentEl = document.querySelector('.bookmarks__list');
@@ -17,6 +18,12 @@ class BookmarksView extends View {
 
   hideButton() {
     this._btnOpen.classList.add('hidden');
+  }
+
+  _generateMarkup() {
+    return this._data
+      .map(bookmark => previewView.render(bookmark, false))
+      .join('');
   }
 }
 

@@ -36,7 +36,14 @@ class AddRecipeView extends View {
     this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
   }
 
-  addHandlerUpload(handler) {}
+  addHandlerUpload(handler) {
+    this._parentEl.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const dataArr = [...new FormData(this)];
+      const data = Object.fromEntries(dataArr);
+      handler(data);
+    });
+  }
 
   showButton() {
     this._btnOpen.classList.remove('hidden');
