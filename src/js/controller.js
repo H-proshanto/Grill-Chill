@@ -59,7 +59,6 @@ const controlRecipes = async function () {
     if (model.state.isAdmin) {
       confirmationView.init();
       confirmationView.addHandlerConfirm(controlChangeCookingTime);
-      deleteItemConfimationView.init();
     }
   } catch (error) {
     recipeView.renderError();
@@ -178,8 +177,7 @@ const controlLogoutBtn = function () {
 const controlChangeCookingTime = function (data) {
   confirmationView.toogleWindow();
   model.setCookingTime(data);
-  console.log(model.state.recipe);
-  recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 
 const init = function () {
