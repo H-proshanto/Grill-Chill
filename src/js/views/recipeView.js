@@ -155,7 +155,7 @@ class RecipeView extends View {
     <div class="message search-message">
       <div>
         <svg>
-          <use href="src/img/icons.svg#icon-smile"></use>
+          <use href="${icons}#icon-smile"></use>
         </svg>
       </div>
       <p>Start by searching for a recipe or an ingredient. Have fun!</p>
