@@ -250,7 +250,20 @@ export const setCookingTime = function (time) {
 export const deleteCurrentRecipe = function () {
   const id = window.location.hash.slice(1);
   const recipes = JSON.parse(localStorage.getItem('recipes'));
+  const users = JSON.parse(localStorage.getItem('users'));
   let index;
+
+  for (let i = 0; i < users.length; i++) {
+    let indexOfBookmark = -1;
+   for (let j = 0; j < users[i].bookmarks.length; j++) {
+      if(users[i].bookmarks[j].id === id) {
+        indexOfBookmark = j;
+      }
+   }
+   if(indexOfBookmark !== -1) {
+    users[i].bookmarks.splice(indexOfBookmark,1);
+   }
+  }
 
   for (let i = 0; i < recipes.length; i++) {
     if (recipes[i].id === id) {
@@ -260,6 +273,7 @@ export const deleteCurrentRecipe = function () {
 
   recipes.splice(index, 1);
   localStorage.setItem('recipes', JSON.stringify(recipes));
+  localStorage.setItem('users', JSON.stringify(users));
   state.search.results = recipes.map(recipe => {
     return {
       id: recipe.id,

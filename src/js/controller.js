@@ -57,8 +57,8 @@ const controlRecipes = async function () {
 
     recipeView.render(model.state.recipe);
     if (model.state.isAdmin) {
-      confirmationView.init();
       confirmationView.addHandlerConfirm(controlChangeCookingTime);
+      confirmationView.init();
     }
     if (!model.state.isUser) helpers.hideBookmark();
   } catch (error) {
@@ -77,8 +77,8 @@ const controlAddRecipe = async function (newRecipe) {
       addRecipeView.renderMessage();
       model.state.recipe.isAdmin = true;
       recipeView.render(model.state.recipe);
-      confirmationView.init();
       confirmationView.addHandlerConfirm(controlChangeCookingTime);
+      confirmationView.init();
       helpers.hideBookmark();
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
     }, MSG_LOAD_TIME * 1200);
