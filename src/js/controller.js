@@ -193,7 +193,9 @@ const controlLogoutBtn = function () {
 const controlChangeCookingTime = function (data) {
   confirmationView.toogleWindow();
   model.setCookingTime(data);
-  recipeView.update(model.state.recipe);
+  model.state.recipe.isAdmin = true;
+  recipeView.render(model.state.recipe);
+  helpers.hideBookmark();
 };
 
 const controlDeleteRecipe = function () {
