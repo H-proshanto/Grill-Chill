@@ -7,7 +7,7 @@ Admin Credentials are hard coded.
 Username : admin
 Password : admin
 
-Login as admin to add,delete and update cooking time of a recipe
+Login as admin to add,delete and update cooking time of a recipe.
 
 #To upload a recipe please use the correct format quantiity,unit,description please use the comma to seperate these three.
 ![Screenshot_3](https://user-images.githubusercontent.com/99821234/189582656-76c09523-99e5-4e75-bdb9-ce03bbf8bc3f.jpg)
@@ -21,7 +21,7 @@ Login as admin to add,delete and update cooking time of a recipe
 
 Users can sign up as user and sign in to view recipe & bookmark their favorite recipes.
 
-# Users will no longer be able to see recipes that admin deletes the recipe will be gone from their bookmarks too.
-# Users can see their bookmark even if they logout.
-# Users can choose servings according to their needs, which shows how much ingredient they need for those servings.
+Users will no longer be able to see recipes that admin deletes the recipe will be gone from their bookmarks too.
+Users can see their bookmark even if they logout.
+Users can choose servings according to their needs, which shows how much ingredient they need for those servings.
 
