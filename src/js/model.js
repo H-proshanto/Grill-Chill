@@ -295,6 +295,14 @@ export const updateServings = function (newServings) {
   });
 
   state.recipe.servings = newServings;
+
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+  recipes.forEach(recipe => {
+    if (recipe.id === state.recipe.id) {
+      recipe.servings = newServings;
+    }
+  });
+  localStorage.setItem('recipes', JSON.stringify(recipes));
 };
 
 const persistBookmarks = function () {
