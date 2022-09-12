@@ -112,6 +112,7 @@ const controlUserLogin = async function (userData) {
     if (model.state.isAdmin) {
       helpers.hideButtonsAndModal();
       helpers.addSessionUserName();
+      helpers.addShowAllRecipesBtn();
       helpers.addCustomRecipeBtn();
       helpers.addLogoutBtn();
       helpers.addlogoutEvListner(controlLogoutBtn);
@@ -150,6 +151,7 @@ const controlPersistLogin = function () {
   if (model.state.isAdmin) {
     helpers.clearNav();
     helpers.addSessionUserName();
+    helpers.addShowAllRecipesBtn();
     helpers.addCustomRecipeBtn();
     helpers.addLogoutBtn();
     helpers.addlogoutEvListner(controlLogoutBtn);
@@ -198,6 +200,8 @@ const controlChangeCookingTime = function (data) {
   model.setCookingTime(data);
   model.state.recipe.isAdmin = true;
   recipeView.render(model.state.recipe);
+  confirmationView.addHandlerConfirm(controlChangeCookingTime);
+  confirmationView.init();
   helpers.hideBookmark();
 };
 
