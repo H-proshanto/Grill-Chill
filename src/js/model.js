@@ -275,15 +275,17 @@ export const deleteCurrentRecipe = function () {
   recipes.splice(index, 1);
   localStorage.setItem('recipes', JSON.stringify(recipes));
   localStorage.setItem('users', JSON.stringify(users));
-  state.search.results = recipes.map(recipe => {
-    return {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      image: recipe.image,
-      isAdmin: state.isAdmin,
-    };
-  });
+  for (let i = 0; i < state.search.results.length; i++) {
+    if (state.search.results[i].id === id) {
+      index = i;
+    }
+  }
+  state.search.results.splice(index, 1);
+
+  if (getSearchResultsPage().length === 0) {
+    if (state.search.page !== 1) state.search.page -= 1;
+    else throw new Error('All Items Deleted !');
+  }
   window.location.hash = '';
 };
 
