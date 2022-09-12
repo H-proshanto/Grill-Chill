@@ -22,6 +22,7 @@ const controlSearchResults = async function () {
     if (query === '') {
       setTimeout(function () {
         resultsView.renderMessage('⚠️ Invalid Token , Please Try Again !');
+        paginationView.refresh();
       }, 1);
     }
     if (!query) return;
@@ -212,11 +213,17 @@ const controlChangeCookingTime = function (data) {
 };
 
 const controlDeleteRecipe = function () {
-  deleteItemConfimationView.toogleWindow();
-  model.deleteCurrentRecipe();
-  resultsView.render(model.getSearchResultsPage());
-  deleteItemConfimationView.init();
-  recipeView.refresh();
+  try {
+    deleteItemConfimationView.toogleWindow();
+    model.deleteCurrentRecipe();
+    resultsView.render(model.getSearchResultsPage());
+    paginationView.render(model.state.search);
+    deleteItemConfimationView.init();
+    recipeView.refresh();
+  } catch (err) {
+    paginationView.refresh();
+    resultsView.renderError(err.message);
+  }
 };
 
 const controlServings = function (newServings) {
