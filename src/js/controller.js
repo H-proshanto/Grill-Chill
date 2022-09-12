@@ -1,15 +1,15 @@
 import * as model from './model.js';
 import * as helpers from './helpers.js';
-import addRecipeView from './views/addRecipeView.js';
-import addUserView from './views/addUserView.js';
-import loginView from './views/loginView.js';
-import bookmarksView from './views/bookmarksView.js';
-import searchView from './views/searchView.js';
-import resultsView from './views/resultsView.js';
-import paginationView from './views/paginationView.js';
-import recipeView from '../js/views/recipeView.js';
-import confirmationView from '../js/views/confirmationView.js';
-import deleteItemConfimationView from './views/deleteItemConfimationView.js';
+import addRecipeView from './views/add-recipe-view.js';
+import addUserView from './views/add-user-view.js';
+import loginView from './views/login-view.js';
+import bookmarksView from './views/bookmarks-view.js';
+import searchView from './views/search-view.js';
+import resultsView from './views/results-view.js';
+import paginationView from './views/pagination-view.js';
+import recipeView from '../js/views/recipe-view.js';
+import confirmationView from '../js/views/confirmation-view.js';
+import deleteItemConfimationView from './views/delete-item-confirmation-view.js';
 
 import { MSG_LOAD_TIME, REFRESH } from './config.js';
 

@@ -1,4 +1,4 @@
-import loginView from './views/loginView';
+import loginView from './views/login-view';
 import icons from '../img/icons.svg';
 
 import { state } from './model';
