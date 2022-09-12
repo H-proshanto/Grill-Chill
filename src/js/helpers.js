@@ -52,6 +52,28 @@ export const addCustomRecipeBtn = function () {
   parentEl.insertAdjacentHTML('beforeend', html);
 };
 
+export const addShowAllRecipesBtn = function () {
+  const parentEl = document.querySelector('.nav__list');
+
+  const html = `
+  <li class="nav__item">
+    <button class="nav__btn nav__btn--all-recipes">
+      <svg
+        class="nav__icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        >
+        <path
+          d="M64 144c26.5 0 48-21.5 48-48s-21.5-48-48-48S16 69.5 16 96s21.5 48 48 48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM64 464c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm48-208c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48z"
+        />
+      </svg>
+      <span>All Recipes</span>
+    </button>
+  </li>`;
+
+  parentEl.insertAdjacentHTML('beforeend', html);
+};
+
 export const addBookmarksBtn = function () {
   const parentEl = document.querySelector('.nav__list');
 
@@ -129,6 +151,13 @@ export const hideButtonsAndModal = function () {
 
 export const addlogoutEvListner = function (handler) {
   const parentEl = document.querySelector('.nav__btn--logout');
+  parentEl.addEventListener('click', function (e) {
+    handler();
+  });
+};
+
+export const addAllRecipesEvListner = function (handler) {
+  const parentEl = document.querySelector('.nav__btn--all-recipes');
   parentEl.addEventListener('click', function (e) {
     handler();
   });

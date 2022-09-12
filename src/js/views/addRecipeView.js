@@ -1,5 +1,6 @@
 import View from './view.js';
 import { REFRESH } from '../config.js';
+import icons from 'url:../../img/icons.svg';
 
 class AddRecipeView extends View {
   _parentEl = document.querySelector('.upload');
@@ -73,11 +74,11 @@ class AddRecipeView extends View {
       <input
         required
         name="sourceUrl"
-        type="text"
+        type="url"
         placeholder="Source URL"
       />
       <label>Image URL</label>
-      <input required name="image" type="text" placeholder="Image URL" />
+      <input required name="image" type="url" placeholder="Image URL" />
       <label>Publisher</label>
       <input
         required
@@ -126,25 +127,25 @@ class AddRecipeView extends View {
       <input
         type="text"
         name="ingredient-4"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
       <label>Ingredient 5</label>
       <input
         type="text"
         name="ingredient-5"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
       <label>Ingredient 6</label>
       <input
         type="text"
         name="ingredient-6"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
     </div>
 
     <button class="btn upload__btn">
       <svg>
-        <use href="src/img/icons.svg#icon-upload-cloud"></use>
+        <use href="${icons}#icon-upload-cloud"></use>
       </svg>
       <span>Upload</span>
     </button>`;

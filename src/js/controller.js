@@ -81,8 +81,15 @@ const controlAddRecipe = async function (newRecipe) {
       confirmationView.init();
       helpers.hideBookmark();
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
+      if (model.state.search.results.length > 0) {
+        resultsView.render(model.getSearchResultsPage());
+        deleteItemConfimationView.init();
+      }
     }, MSG_LOAD_TIME * 1200);
   } catch (err) {
+    addRecipeView.renderError(
+      err.message + '\n Correct format : Quantity,Unit,Description'
+    );
     console.error(err);
   }
 };
@@ -109,9 +116,11 @@ const controlUserLogin = async function (userData) {
     if (model.state.isAdmin) {
       helpers.hideButtonsAndModal();
       helpers.addSessionUserName();
+      helpers.addShowAllRecipesBtn();
       helpers.addCustomRecipeBtn();
       helpers.addLogoutBtn();
       helpers.addlogoutEvListner(controlLogoutBtn);
+      helpers.addAllRecipesEvListner(controlShowAllRecipes);
       addRecipeView.addHandlerUpload(controlAddRecipe);
       addRecipeView.init();
       model.setLoginHash(userData);
@@ -147,9 +156,11 @@ const controlPersistLogin = function () {
   if (model.state.isAdmin) {
     helpers.clearNav();
     helpers.addSessionUserName();
+    helpers.addShowAllRecipesBtn();
     helpers.addCustomRecipeBtn();
     helpers.addLogoutBtn();
     helpers.addlogoutEvListner(controlLogoutBtn);
+    helpers.addAllRecipesEvListner(controlShowAllRecipes);
     addRecipeView.addHandlerUpload(controlAddRecipe);
     addRecipeView.init();
   } else if (model.state.isUser) {
@@ -195,14 +206,17 @@ const controlChangeCookingTime = function (data) {
   model.setCookingTime(data);
   model.state.recipe.isAdmin = true;
   recipeView.render(model.state.recipe);
+  confirmationView.addHandlerConfirm(controlChangeCookingTime);
+  confirmationView.init();
   helpers.hideBookmark();
 };
 
 const controlDeleteRecipe = function () {
   deleteItemConfimationView.toogleWindow();
   model.deleteCurrentRecipe();
+  resultsView.render(model.getSearchResultsPage());
+  deleteItemConfimationView.init();
   recipeView.refresh();
-  resultsView.update(model.getSearchResultsPage());
 };
 
 const controlServings = function (newServings) {
@@ -219,6 +233,16 @@ const controlAddBookmark = function () {
   recipeView.update(model.state.recipe);
 
   bookmarksView.render(model.state.bookmarks);
+};
+
+const controlShowAllRecipes = function () {
+  resultsView.renderSpinner();
+  model.getAllRecipes();
+  setTimeout(function () {
+    resultsView.render(model.getSearchResultsPage());
+    paginationView.render(model.state.search);
+    deleteItemConfimationView.init();
+  }, REFRESH);
 };
 
 const init = function () {

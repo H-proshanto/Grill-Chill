@@ -123,6 +123,7 @@ export const uploadRecipe = async function (newRecipe) {
     recipes.push(recipe);
     localStorage.setItem('recipes', JSON.stringify(recipes));
     state.recipe = recipe;
+    state.search.results.push(recipe);
   } catch (err) {
     throw err;
   }
@@ -255,14 +256,14 @@ export const deleteCurrentRecipe = function () {
 
   for (let i = 0; i < users.length; i++) {
     let indexOfBookmark = -1;
-   for (let j = 0; j < users[i].bookmarks.length; j++) {
-      if(users[i].bookmarks[j].id === id) {
+    for (let j = 0; j < users[i].bookmarks.length; j++) {
+      if (users[i].bookmarks[j].id === id) {
         indexOfBookmark = j;
       }
-   }
-   if(indexOfBookmark !== -1) {
-    users[i].bookmarks.splice(indexOfBookmark,1);
-   }
+    }
+    if (indexOfBookmark !== -1) {
+      users[i].bookmarks.splice(indexOfBookmark, 1);
+    }
   }
 
   for (let i = 0; i < recipes.length; i++) {
@@ -326,4 +327,19 @@ export const setBookmarks = function () {
   const users = JSON.parse(localStorage.getItem('users'));
 
   state.bookmarks = users[Number(hash[lastIndex])].bookmarks;
+};
+
+export const getAllRecipes = function () {
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+
+  state.search.results = recipes.map(recipe => {
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      publisher: recipe.publisher,
+      image: recipe.image,
+      isAdmin: true,
+    };
+  });
+  state.search.page = 1;
 };
