@@ -98,3 +98,16 @@
     justify-self: center;
   }
 }
+
+.help__btn {
+  position: absolute;
+  top: 43rem;
+  right: 7rem;
+  color: beige;
+  font-size: 1.6rem;
+
+  &:link,
+  &:visited {
+    color: $color-grey-dark-2;
+  }
+}
