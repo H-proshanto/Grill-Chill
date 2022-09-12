@@ -22,6 +22,7 @@ const controlSearchResults = async function () {
     if (query === '') {
       setTimeout(function () {
         resultsView.renderMessage('⚠️ Invalid Token , Please Try Again !');
+        paginationView.refresh();
       }, 1);
     }
     if (!query) return;
