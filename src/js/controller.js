@@ -83,6 +83,9 @@ const controlAddRecipe = async function (newRecipe) {
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
     }, MSG_LOAD_TIME * 1200);
   } catch (err) {
+    addRecipeView.renderError(
+      err.message + '\n Correct format : Quantity,Unit,Description'
+    );
     console.error(err);
   }
 };
