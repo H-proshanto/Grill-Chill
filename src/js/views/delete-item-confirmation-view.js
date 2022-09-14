@@ -36,11 +36,17 @@ class DeleteItemConfirmationView extends View {
   }
 
   _addHandlerHideWindow() {
-    const bindedToggle = this.toogleWindow.bind(this);
+    const overlay = this._overlay;
+    const bindedToggleWindow = this.toogleWindow.bind(this);
+
     this._btnCancel.addEventListener('click', function(e) {
       e.preventDefault();
-      bindedToggle();
+      bindedToggleWindow();
     });
+
+    this._overlay.addEventListener('click', (e) => {
+      if(!overlay.classList.contains('hidden'))bindedToggleWindow();
+    }); 
   }
 
   addHandlerConfirm(handler) {

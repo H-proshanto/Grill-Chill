@@ -15,6 +15,7 @@ import { MSG_LOAD_TIME, REFRESH } from './config.js';
 
 const controlSearchResults = async function () {
   try {
+    paginationView.refresh();
     resultsView.renderSpinner();
 
     const query = searchView.getQuery();
@@ -243,6 +244,7 @@ const controlAddBookmark = function () {
 };
 
 const controlShowAllRecipes = function () {
+  paginationView.refresh();
   resultsView.renderSpinner();
   model.getAllRecipes();
   setTimeout(function () {
