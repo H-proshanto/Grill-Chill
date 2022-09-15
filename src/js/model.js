@@ -1,7 +1,7 @@
-import { initAdmins } from './data/admins.js';
-import { initUsers } from './data/users.js';
-import { initRecipes } from './data/recipes.js';
-import { RES_PER_PAGE } from './config.js';
+import { initAdmins } from './data/admins';
+import { initUsers } from './data/users';
+import { initRecipes } from './data/recipes';
+import { RES_PER_PAGE } from './config';
 
 export const state = {
   username: '',

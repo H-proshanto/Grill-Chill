@@ -1,4 +1,4 @@
-import View from './view';
+import View from './View';
 
 class ConfirmationView extends View {
   _parentEl = document.querySelector('.confirmation__form');
@@ -36,14 +36,14 @@ class ConfirmationView extends View {
     const overlay = this._overlay;
     const bindedToggleWindow = this.toogleWindow.bind(this);
 
-    this._btnCancel.addEventListener('click', (e) => {
+    this._btnCancel.addEventListener('click', e => {
       e.preventDefault();
       bindedToggleWindow();
     });
 
-    this._overlay.addEventListener('click', (e) => {
-      if(!overlay.classList.contains('hidden'))bindedToggleWindow();
-    }); 
+    this._overlay.addEventListener('click', e => {
+      if (!overlay.classList.contains('hidden')) bindedToggleWindow();
+    });
   }
 
   addHandlerConfirm(handler) {

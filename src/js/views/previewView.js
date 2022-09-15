@@ -1,4 +1,4 @@
-import View from './view.js';
+import View from './View';
 
 class PreviewView extends View {
   _parentElement = '';

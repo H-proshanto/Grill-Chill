@@ -1,17 +1,17 @@
-import * as model from './model.js';
-import * as helpers from './helpers.js';
-import addRecipeView from './views/add-recipe-view.js';
-import addUserView from './views/add-user-view.js';
-import loginView from './views/login-view.js';
-import bookmarksView from './views/bookmarks-view.js';
-import searchView from './views/search-view.js';
-import resultsView from './views/results-view.js';
-import paginationView from './views/pagination-view.js';
-import recipeView from '../js/views/recipe-view.js';
-import confirmationView from '../js/views/confirmation-view.js';
-import deleteItemConfimationView from './views/delete-item-confirmation-view.js';
+import * as model from './model';
+import * as helpers from './helpers';
+import addRecipeView from './views/addRecipeView';
+import addUserView from './views/addUserView';
+import loginView from './views/loginView';
+import bookmarksView from './views/bookmarksView';
+import searchView from './views/searchView';
+import resultsView from './views/resultsView';
+import paginationView from './views/paginationView';
+import recipeView from '../js/views/recipeView';
+import confirmationView from '../js/views/confirmationView';
+import deleteItemConfimationView from './views/deleteItemConfimationView';
 
-import { MSG_LOAD_TIME, REFRESH } from './config.js';
+import { MSG_LOAD_TIME, REFRESH } from './config';
 
 const controlSearchResults = async function () {
   try {

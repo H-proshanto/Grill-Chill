@@ -1,5 +1,5 @@
-import View from './view.js';
-import { REFRESH } from '../config.js';
+import View from './View';
+import { REFRESH } from '../config';
 
 class AddUserView extends View {
   _parentEl = document.querySelector('.registration__form');
@@ -45,11 +45,11 @@ class AddUserView extends View {
   _addHandlerHideWindow() {
     const overlay = this._overlay;
     const bindedToggleWindow = this.toogleWindow.bind(this);
-    
+
     this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
-    this._overlay.addEventListener('click', (e) => {
-      if(!overlay.classList.contains('hidden'))bindedToggleWindow();
-    });    
+    this._overlay.addEventListener('click', e => {
+      if (!overlay.classList.contains('hidden')) bindedToggleWindow();
+    });
   }
 
   addHandlerUploadUser(handler) {
