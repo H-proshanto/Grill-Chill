@@ -3,7 +3,7 @@
   background-color: $color-grey-light-1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   &__logo {
     margin-left: 4.5rem;
@@ -13,8 +13,7 @@
 }
 
 .search {
-  position:absolute;
-  right: 74.6rem;
+  margin-left: 9rem;
   background-color: #fff;
   border-radius: 0.5rem;
   display: flex;
@@ -66,6 +65,7 @@
 .nav {
   align-self: stretch;
   margin-right: 2.5rem;
+  margin-left: auto;
 
   &__list {
     list-style: none;
