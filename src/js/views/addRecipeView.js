@@ -113,7 +113,7 @@ class AddRecipeView extends View {
       <label>Ingredient 1</label>
       <div class="upload__ingredient-inputs">
         <input
-          type="number"
+          type="text"
           name="ingredient-0-quantity"
           placeholder="Quantity"
         />
@@ -132,7 +132,7 @@ class AddRecipeView extends View {
       <label>Ingredient 2</label>
       <div class="upload__ingredient-inputs">
         <input
-          type="number"
+          type="text"
           name="ingredient-1-quantity"
           placeholder="Quantity"
         />
@@ -150,7 +150,7 @@ class AddRecipeView extends View {
       <label>Ingredient 3</label>
       <div class="upload__ingredient-inputs">
         <input
-          type="number"
+          type="text"
           name="ingredient-2-quantity"
           placeholder="Quantity"
         />
@@ -168,7 +168,7 @@ class AddRecipeView extends View {
       <label>Ingredient 4</label>
       <div class="upload__ingredient-inputs">
         <input
-          type="number"
+          type="text"
           name="ingredient-3-quantity"
           placeholder="Quantity"
         />
@@ -186,7 +186,7 @@ class AddRecipeView extends View {
       <label>Ingredient 5</label>
       <div class="upload__ingredient-inputs">
         <input
-          type="number"
+          type="text"
           name="ingredient-4-quantity"
           placeholder="Quantity"
         />
@@ -204,7 +204,7 @@ class AddRecipeView extends View {
       <label>Ingredient 6</label>
       <div class="upload__ingredient-inputs">
         <input
-          type="number"
+          type="text"
           name="ingredient-5-quantity"
           placeholder="Quantity"
         />
