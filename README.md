@@ -30,7 +30,7 @@ Password : admin
 <p>&middot; Users can choose servings according to their needs, which shows how much ingredient they need for those servings. </p>
 
 
-## Developer Instractions
+## Developer Instructions
 
 First clone the repo to local device. Open the folder where the repo is stored. Then use `terminal/bash`.
 
