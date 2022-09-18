@@ -71,7 +71,7 @@ class AddRecipeView extends View {
   }
 
   _generateMarkup() {
-    return ` 
+    return `
     <div class="upload__column">
       <h3 class="upload__heading">Recipe data</h3>
       <label>Title</label>
@@ -101,54 +101,132 @@ class AddRecipeView extends View {
       />
       <label>Servings</label>
       <input
-      required
-      name="servings"
-      type="number"
-      placeholder="Number Of Servings"
+        required
+        name="servings"
+        type="number"
+        placeholder="Number Of Servings"
       />
     </div>
-
+     
     <div class="upload__column">
       <h3 class="upload__heading">Ingredients</h3>
       <label>Ingredient 1</label>
-      <input
-        type="text"
-        required
-        name="ingredient-1"
-        placeholder="Quantity,Unit,Description"
-      />
+      <div class="upload__ingredient-inputs">
+        <input
+          type="number"
+          name="ingredient-0-quantity"
+          placeholder="Quantity"
+        />
+        <input
+          type="text"
+          name="ingredient-0-unit"
+          placeholder="Unit"
+        />
+        <input
+          type="text"
+          required
+          name="ingredient-0-description"
+          placeholder="Description"
+        />
+      </div>
       <label>Ingredient 2</label>
-      <input
-        type="text"
-        name="ingredient-2"
-        placeholder="Quantity,Unit,Description"
-      />
+      <div class="upload__ingredient-inputs">
+        <input
+          type="number"
+          name="ingredient-1-quantity"
+          placeholder="Quantity"
+        />
+        <input
+          type="text"
+          name="ingredient-1-unit"
+          placeholder="Unit"
+        />
+        <input
+          type="text"
+          name="ingredient-1-description"
+          placeholder="Description"
+        />
+      </div>
       <label>Ingredient 3</label>
-      <input
-        type="text"
-        name="ingredient-3"
-        placeholder="Quantity,Unit,Description"
-      />
+      <div class="upload__ingredient-inputs">
+        <input
+          type="number"
+          name="ingredient-2-quantity"
+          placeholder="Quantity"
+        />
+        <input
+          type="text"
+          name="ingredient-2-unit"
+          placeholder="Unit"
+        />
+        <input
+          type="text"
+          name="ingredient-2-description"
+          placeholder="Description"
+        />
+      </div>
       <label>Ingredient 4</label>
-      <input
-        type="text"
-        name="ingredient-4"
-        placeholder="Quantity,Unit,Description"
-      />
+      <div class="upload__ingredient-inputs">
+        <input
+          type="number"
+          name="ingredient-3-quantity"
+          placeholder="Quantity"
+        />
+        <input
+          type="text"
+          name="ingredient-3-unit"
+          placeholder="Unit"
+        />
+        <input
+          type="text"
+          name="ingredient-3-description"
+          placeholder="Description"
+        />
+      </div>
       <label>Ingredient 5</label>
-      <input
-        type="text"
-        name="ingredient-5"
-        placeholder="Quantity,Unit,Description"
-      />
+      <div class="upload__ingredient-inputs">
+        <input
+          type="number"
+          name="ingredient-4-quantity"
+          placeholder="Quantity"
+        />
+        <input
+          type="text"
+          name="ingredient-4-unit"
+          placeholder="Unit"
+        />
+        <input
+          type="text"
+          name="ingredient-4-description"
+          placeholder="Description"
+        />
+      </div>
       <label>Ingredient 6</label>
-      <input
-        type="text"
-        name="ingredient-6"
-        placeholder="Quantity,Unit,Description"
-      />
+      <div class="upload__ingredient-inputs">
+        <input
+          type="number"
+          name="ingredient-5-quantity"
+          placeholder="Quantity"
+        />
+        <input
+          type="text"
+          name="ingredient-5-unit"
+          placeholder="Unit"
+        />
+        <input
+          type="text"
+          name="ingredient-5-description"
+          placeholder="Description"
+        />
+      </div>
     </div>
-
+    <a
+      class="help__btn"
+      href="https://user-images.githubusercontent.com/99821234/189582656-76c09523-99e5-4e75-bdb9-ce03bbf8bc3f.jpg"
+      target="_blank"
+    >
+    Help!
+    </a>
     <button class="btn upload__btn">
       <svg>
         <use href="${icons}#icon-upload-cloud"></use>

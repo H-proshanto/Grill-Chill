@@ -87,19 +87,43 @@ export const uploadedUser = function (newUser) {
 
 export const uploadRecipe = async function (newRecipe) {
   try {
-    const ingredients = Object.entries(newRecipe)
-      .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
-      .map(ing => {
-        const ingArr = ing[1].split(',').map(el => el.trim());
-        if (ingArr.length !== 3)
-          throw new Error(
-            'Wrong ingredient fromat! Please use the correct format :)'
-          );
-
-        const [quantity, unit, description] = ingArr;
-
-        return { quantity: quantity ? +quantity : null, unit, description };
+    const allIngredients = [];
+    const ingredients = [];
+    Object.entries(newRecipe)
+      .filter(el => {
+        const nameOfelement = el[0];
+        if (nameOfelement.includes('ingredient') === true) {
+          return el;
+        }
+      })
+      .forEach(el => {
+        const nameOfIngredient = el[0];
+        const valueOfIngredient = el[1];
+        const index = nameOfIngredient[11];
+        const property = nameOfIngredient.slice(13);
+        if (property === 'quantity') {
+          const newObject = {};
+          const convertedValue = Number(valueOfIngredient);
+          newObject[property] = convertedValue !== 0 ? convertedValue : null;
+          allIngredients.push(newObject);
+        } else {
+          const object = allIngredients[index];
+          object[property] = valueOfIngredient;
+        }
       });
+
+    allIngredients.forEach((el, index) => {
+      if (
+        el.description.length === 0 &&
+        (el.unit.length !== 0 || el.quantity !== null)
+      ) {
+        throw Error('Please give the description of the ingredient');
+      }
+
+      if (el.description.length !== 0) {
+        ingredients.push(el);
+      }
+    });
 
     const recipe = {
       title: newRecipe.title,
