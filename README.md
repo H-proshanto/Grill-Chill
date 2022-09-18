@@ -12,13 +12,13 @@ Password : admin
 <p>Login as admin to add,delete and update cooking time of a recipe.</p>
 
 <p>&middot; To upload a recipe please use the correct format quantiity, unit, descriptio. </p>
-![Screenshot_4](https://user-images.githubusercontent.com/99821234/190901249-a1c662fa-3209-4b2a-a911-6eeb566680dd.jpg)
+<img src = "https://user-images.githubusercontent.com/99821234/190901249-a1c662fa-3209-4b2a-a911-6eeb566680dd.jpg">
 
 <p>&middot; This is where the admin can delete a recipe </p>
-![Screenshot_1](https://user-images.githubusercontent.com/99821234/189581748-55d300df-6c32-4e0c-84d6-0a6f8af9bc44.jpg)
+<img src = "https://user-images.githubusercontent.com/99821234/189581748-55d300df-6c32-4e0c-84d6-0a6f8af9bc44.jpg">
 
 <p>&middot; To update cooking time click this button </p>
-![Screenshot_2](https://user-images.githubusercontent.com/99821234/189581976-2357148b-83a0-4b72-b274-a43d94c28a06.jpg)
+<img src = "https://user-images.githubusercontent.com/99821234/189581976-2357148b-83a0-4b72-b274-a43d94c28a06.jpg">
 
 
 <p>Users can sign up as user and sign in to view recipe & bookmark their favorite recipes.</p>
