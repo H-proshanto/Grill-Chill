@@ -11,7 +11,7 @@ Password : admin
 
 <p>Login as admin to add,delete and update cooking time of a recipe.</p>
 
-<p>&middot; To upload a recipe please use the correct format quantiity, unit, descriptio. </p>
+<p>&middot; To upload a recipe please use the correct format quantiity, unit, description. </p>
 <img src = "https://user-images.githubusercontent.com/99821234/190901249-a1c662fa-3209-4b2a-a911-6eeb566680dd.jpg">
 
 <p>&middot; This is where the admin can delete a recipe </p>
