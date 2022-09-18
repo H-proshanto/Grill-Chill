@@ -84,6 +84,7 @@ const controlAddRecipe = async function (newRecipe) {
       helpers.hideBookmark();
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
       if (model.state.search.results.length > 0) {
+        paginationView.render(model.state.search);
         resultsView.render(model.getSearchResultsPage());
         deleteItemConfimationView.init();
       }
