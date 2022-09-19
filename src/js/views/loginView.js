@@ -17,11 +17,6 @@ class LoginView extends View {
     this._addHandlerHideWindow();
   }
 
-  refreshBtn() {
-    this._btnOpen = document.querySelector('.nav__btn--login');
-    this._addHandlerShowWindow();
-  }
-
   toogleWindow() {
     const hasMessage = this._parentEl.lastChild.classList?.contains('message');
     const hasErrorMessage =
@@ -48,7 +43,9 @@ class LoginView extends View {
     const overlay = this._overlay;
     const bindedToggleWindow = this.toogleWindow.bind(this);
 
-    this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
+    this._btnClose.addEventListener('click', e => {
+      if (!overlay.classList.contains('hidden')) bindedToggleWindow();
+    });
     this._overlay.addEventListener('click', e => {
       if (!overlay.classList.contains('hidden')) bindedToggleWindow();
     });

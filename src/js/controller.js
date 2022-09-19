@@ -33,8 +33,10 @@ const searchResults = async function () {
       renderLoadResults();
     }, REFRESH);
   } catch (err) {
-    resultsView.renderError(err.message);
-    console.log(err);
+    setTimeout(function () {
+      resultsView.renderError(err.message);
+      console.log(err);
+    }, REFRESH);
   }
 };
 
@@ -176,16 +178,8 @@ const pagination = function (goToPage) {
 
 const logout = function () {
   try {
-    sessionHelpers.clearHash();
-    sessionHelpers.clearNav();
-    addBtnHelpers.addloginBtn();
-    addBtnHelpers.addRegistrationpBtn();
-    loginView.refreshBtn();
-    addUserView.refreshBtn();
+    window.location.href = '../../index.html';
     model.refreshSession();
-    resultsView.refresh();
-    paginationView.refresh();
-    recipeView.refresh();
   } catch (err) {
     console.error(err);
   }
