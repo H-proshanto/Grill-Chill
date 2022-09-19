@@ -1,5 +1,8 @@
 import * as model from './model';
-import * as helpers from './helpers';
+import * as addEvListnerHelpers from './helpers/addEvListnerHelpers';
+import * as hidingHelpers from './helpers/hidingHelpers';
+import * as sessionHelpers from './helpers/sessionHelpers';
+import * as addBtnHelpers from './helpers/addBtnHelpers';
 import addRecipeView from './views/addRecipeView';
 import addUserView from './views/addUserView';
 import loginView from './views/loginView';
@@ -56,7 +59,7 @@ const recipes = async function () {
     }
 
     if (!model.state.isUser) {
-      helpers.hideBookmark();
+      hidingHelpers.hideBookmark();
     }
   } catch (error) {
     recipeView.renderError();
@@ -74,7 +77,7 @@ const addRecipe = async function (newRecipe) {
       model.state.recipe.isAdmin = true;
       recipeView.render(model.state.recipe);
       confirmationViewinit();
-      helpers.hideBookmark();
+      hidingHelpers.hideBookmark();
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
       if (model.state.search.results.length > 0) {
@@ -106,21 +109,22 @@ const userLogin = async function (userData) {
     model.isAuthenticated(userData);
     loginView.renderSpinner();
     if (model.state.isAdmin || model.state.isUser) {
-      helpers.hideButtonsAndModal();
-      helpers.addSessionUserName();
+      sessionHelpers.clearNav();
+      hidingHelpers.hideModal();
+      addBtnHelpers.addSessionUserName();
     }
 
     if (model.state.isAdmin) {
-      helpers.addShowAllRecipesBtn();
-      helpers.addCustomRecipeBtn();
+      addBtnHelpers.addShowAllRecipesBtn();
+      addBtnHelpers.addCustomRecipeBtn();
       logoutInit();
-      helpers.addAllRecipesEvListner(showlAllRecipes);
+      addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
       addRecipeView.addHandlerUpload(addRecipe);
       addRecipeView.init();
       model.setLoginHash(userData);
       refreshPage();
     } else if (model.state.isUser) {
-      helpers.addBookmarksBtn();
+      addBtnHelpers.addBookmarksBtn();
       logoutInit();
       bookmarksView.addHandlerRender(bookmarks);
       model.setLoginHash(userData);
@@ -141,19 +145,19 @@ const persistLogin = function () {
   model.persistLogin();
 
   if (model.state.isAdmin || model.state.isUser) {
-    helpers.clearNav();
-    helpers.addSessionUserName();
+    sessionHelpers.clearNav();
+    addBtnHelpers.addSessionUserName();
   }
 
   if (model.state.isAdmin) {
-    helpers.addShowAllRecipesBtn();
-    helpers.addCustomRecipeBtn();
+    addBtnHelpers.addShowAllRecipesBtn();
+    addBtnHelpers.addCustomRecipeBtn();
     logoutInit();
-    helpers.addAllRecipesEvListner(showlAllRecipes);
+    addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
     addRecipeView.addHandlerUpload(addRecipe);
     addRecipeView.init();
   } else if (model.state.isUser) {
-    helpers.addBookmarksBtn();
+    addBtnHelpers.addBookmarksBtn();
     logoutInit();
     bookmarksView.addHandlerRender(bookmarks);
     bookmarksView.render(model.state.bookmarks);
@@ -172,10 +176,10 @@ const pagination = function (goToPage) {
 
 const logout = function () {
   try {
-    helpers.clearHash();
-    helpers.clearNav();
-    helpers.addloginBtn();
-    helpers.addRegistrationpBtn();
+    sessionHelpers.clearHash();
+    sessionHelpers.clearNav();
+    addBtnHelpers.addloginBtn();
+    addBtnHelpers.addRegistrationpBtn();
     loginView.refreshBtn();
     addUserView.refreshBtn();
     model.refreshSession();
@@ -193,7 +197,7 @@ const changeCookingTime = function (data) {
   model.state.recipe.isAdmin = true;
   recipeView.render(model.state.recipe);
   confirmationViewinit();
-  helpers.hideBookmark();
+  hidingHelpers.hideBookmark();
 };
 
 const deleteRecipe = function () {
@@ -212,7 +216,7 @@ const servings = function (newServings) {
   model.updateServings(newServings);
 
   recipeView.update(model.state.recipe);
-  if (!model.state.isUser) helpers.hideBookmark();
+  if (!model.state.isUser) hidingHelpers.hideBookmark();
 };
 
 const addbookmarks = function () {
@@ -252,8 +256,8 @@ const confirmationViewinit = function () {
 };
 
 const logoutInit = function () {
-  helpers.addLogoutBtn();
-  helpers.addlogoutEvListner(logout);
+  addBtnHelpers.addLogoutBtn();
+  addEvListnerHelpers.addlogoutEvListner(logout);
 };
 
 const nullQueryRefresh = function () {
@@ -263,10 +267,14 @@ const nullQueryRefresh = function () {
 };
 
 const renderLoadResults = function () {
-  resultsView.render(model.getSearchResultsPage());
-  paginationView.render(model.state.search);
-  if (model.state.isAdmin) {
-    deleteItemConfimationView.init();
+  try {
+    resultsView.render(model.getSearchResultsPage());
+    paginationView.render(model.state.search);
+    if (model.state.isAdmin) {
+      deleteItemConfimationView.init();
+    }
+  } catch (err) {
+    throw err;
   }
 };
 
