@@ -1,8 +1,5 @@
-import loginView from './views/loginView';
-import icons from '../img/icons.svg';
-
-import { state } from './model';
-import { MSG_LOAD_TIME } from './config';
+import icons from '../../img/icons.svg';
+import { state } from '../model';
 
 export const addloginBtn = function () {
   const parentEl = document.querySelector('.nav__list');
@@ -132,73 +129,4 @@ export const addLogoutBtn = function () {
     </button>
     `;
   parentEl.insertAdjacentHTML('beforeend', html);
-};
-
-export const clearNav = function () {
-  parentEl = document.querySelector('.nav__list');
-  parentEl.innerHTML = '';
-};
-
-export const hideButtonsAndModal = function () {
-  clearNav();
-
-  setTimeout(loginView.renderMessage.bind(loginView), MSG_LOAD_TIME * 1000);
-  setTimeout(() => {
-    loginView.renderMessage();
-    setTimeout(loginView.toogleWindow.bind(loginView), MSG_LOAD_TIME * 220);
-  }, MSG_LOAD_TIME * 1000);
-};
-
-export const addlogoutEvListner = function (handler) {
-  const parentEl = document.querySelector('.nav__btn--logout');
-  parentEl.addEventListener('click', function (e) {
-    handler();
-  });
-};
-
-export const addAllRecipesEvListner = function (handler) {
-  const parentEl = document.querySelector('.nav__btn--all-recipes');
-  parentEl.addEventListener('click', function (e) {
-    handler();
-  });
-};
-
-export const clearHash = function () {
-  window.location.hash = '';
-};
-
-export const hideMessage = function () {
-  parentEl = document.querySelector('.search-message');
-  if (!parentEl.classList.contains('hidden')) parentEl.classList.add('hidden');
-};
-
-export const showMessage = function () {
-  parentEl = document.querySelector('.search-message');
-  if (parentEl.classList.contains('hidden'))
-    parentEl.classList.remove('hidden');
-};
-
-export const getFraction = decimal => {
-  if (decimal % 1 === 0) return decimal.toString();
-  const gcd = function (a, b) {
-    if (!b) return a;
-
-    return gcd(b, a % b);
-  };
-
-  decimal = decimal.toFixed(2);
-  let denominator = 100;
-  let numerator = decimal * denominator;
-
-  const divisor = gcd(numerator, denominator);
-
-  numerator /= divisor;
-  denominator /= divisor;
-  const result = numerator.toString() + '/' + denominator.toString();
-  return result;
-};
-
-export const hideBookmark = function () {
-  parentEl = document.querySelector('.btn--bookmark');
-  if (!parentEl.classList.contains('hidden')) parentEl.classList.add('hidden');
 };

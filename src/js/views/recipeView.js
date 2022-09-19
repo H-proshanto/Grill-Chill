@@ -1,7 +1,7 @@
 import View from './View';
-import { getFraction } from '../helpers';
-import icons from 'url:../../img/icons.svg';
-import timeIcon from 'url:../../img/time-icon.svg';
+import icons from '../../img/icons.svg';
+import timeIcon from '../../img/time-icon.svg';
+import { getFraction } from '../helpers/mathHelpers';
 
 class RecipeView extends View {
   _parentEl = document.querySelector('.recipe');

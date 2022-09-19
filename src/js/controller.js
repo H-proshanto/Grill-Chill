@@ -1,5 +1,8 @@
 import * as model from './model';
-import * as helpers from './helpers';
+import * as addEvListnerHelpers from './helpers/addEvListnerHelpers';
+import * as hidingHelpers from './helpers/hidingHelpers';
+import * as sessionHelpers from './helpers/sessionHelpers';
+import * as addBtnHelpers from './helpers/addBtnHelpers';
 import addRecipeView from './views/addRecipeView';
 import addUserView from './views/addUserView';
 import loginView from './views/loginView';
@@ -20,20 +23,14 @@ const searchResults = async function () {
     resultsView.renderSpinner();
 
     if (query === '') {
-      paginationView.refresh();
-      model.state.search.results = [];
-      model.state.search.page = 1;
+      nullQueryRefresh();
       throw Error('Invalid Token , Please Try Again !');
     }
 
     await model.loadSearchResults(query);
 
     setTimeout(function () {
-      resultsView.render(model.getSearchResultsPage());
-      paginationView.render(model.state.search);
-      if (model.state.isAdmin) {
-        deleteItemConfimationView.init();
-      }
+      renderLoadResults();
     }, REFRESH);
   } catch (err) {
     resultsView.renderError(err.message);
@@ -48,20 +45,22 @@ const recipes = async function () {
 
     if (!id) return;
     recipeView.renderSpinner();
-
     resultsView.update(model.getSearchResultsPage());
 
-    if (model.state.isUser) bookmarksView.update(model.state.bookmarks);
+    if (model.state.isUser) {
+      bookmarksView.update(model.state.bookmarks);
+    }
 
     await model.loadRecipe(id);
-    const { recipe } = model.state;
-
     recipeView.render(model.state.recipe);
+
     if (model.state.isAdmin) {
-      confirmationView.addHandlerConfirm(changeCookingTime);
-      confirmationView.init();
+      confirmationViewinit();
     }
-    if (!model.state.isUser) helpers.hideBookmark();
+
+    if (!model.state.isUser) {
+      hidingHelpers.hideBookmark();
+    }
   } catch (error) {
     recipeView.renderError();
     console.error(err);
@@ -71,21 +70,18 @@ const recipes = async function () {
 const addRecipe = async function (newRecipe) {
   try {
     addRecipeView.renderSpinner();
-
     await model.uploadRecipe(newRecipe);
 
     setTimeout(function () {
       addRecipeView.renderMessage();
       model.state.recipe.isAdmin = true;
       recipeView.render(model.state.recipe);
-      confirmationView.addHandlerConfirm(changeCookingTime);
-      confirmationView.init();
-      helpers.hideBookmark();
+      confirmationViewinit();
+      hidingHelpers.hideBookmark();
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
       if (model.state.search.results.length > 0) {
-        paginationView.render(model.state.search);
-        resultsView.render(model.getSearchResultsPage());
-        deleteItemConfimationView.init();
+        updateSearchResults();
       }
     }, MSG_LOAD_TIME * 1200);
   } catch (err) {
@@ -112,34 +108,29 @@ const userLogin = async function (userData) {
   try {
     model.isAuthenticated(userData);
     loginView.renderSpinner();
+    if (model.state.isAdmin || model.state.isUser) {
+      sessionHelpers.clearNav();
+      hidingHelpers.hideModal();
+      addBtnHelpers.addSessionUserName();
+    }
 
     if (model.state.isAdmin) {
-      helpers.hideButtonsAndModal();
-      helpers.addSessionUserName();
-      helpers.addShowAllRecipesBtn();
-      helpers.addCustomRecipeBtn();
-      helpers.addLogoutBtn();
-      helpers.addlogoutEvListner(logout);
-      helpers.addAllRecipesEvListner(showlAllRecipes);
+      addBtnHelpers.addShowAllRecipesBtn();
+      addBtnHelpers.addCustomRecipeBtn();
+      logoutInit();
+      addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
       addRecipeView.addHandlerUpload(addRecipe);
       addRecipeView.init();
       model.setLoginHash(userData);
-      recipeView.refresh();
-      resultsView.refresh();
-      paginationView.refresh();
+      refreshPage();
     } else if (model.state.isUser) {
-      helpers.hideButtonsAndModal();
-      helpers.addSessionUserName();
-      helpers.addBookmarksBtn();
-      helpers.addLogoutBtn();
-      helpers.addlogoutEvListner(logout);
+      addBtnHelpers.addBookmarksBtn();
+      logoutInit();
       bookmarksView.addHandlerRender(bookmarks);
       model.setLoginHash(userData);
       model.setBookmarks();
       bookmarksView.render(model.state.bookmarks);
-      recipeView.refresh();
-      resultsView.refresh();
-      paginationView.refresh();
+      refreshPage();
     } else {
       setTimeout(() => {
         loginView.renderError();
@@ -153,22 +144,21 @@ const userLogin = async function (userData) {
 const persistLogin = function () {
   model.persistLogin();
 
+  if (model.state.isAdmin || model.state.isUser) {
+    sessionHelpers.clearNav();
+    addBtnHelpers.addSessionUserName();
+  }
+
   if (model.state.isAdmin) {
-    helpers.clearNav();
-    helpers.addSessionUserName();
-    helpers.addShowAllRecipesBtn();
-    helpers.addCustomRecipeBtn();
-    helpers.addLogoutBtn();
-    helpers.addlogoutEvListner(logout);
-    helpers.addAllRecipesEvListner(showlAllRecipes);
+    addBtnHelpers.addShowAllRecipesBtn();
+    addBtnHelpers.addCustomRecipeBtn();
+    logoutInit();
+    addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
     addRecipeView.addHandlerUpload(addRecipe);
     addRecipeView.init();
   } else if (model.state.isUser) {
-    helpers.clearNav();
-    helpers.addSessionUserName();
-    helpers.addBookmarksBtn();
-    helpers.addLogoutBtn();
-    helpers.addlogoutEvListner(logout);
+    addBtnHelpers.addBookmarksBtn();
+    logoutInit();
     bookmarksView.addHandlerRender(bookmarks);
     bookmarksView.render(model.state.bookmarks);
   }
@@ -186,10 +176,10 @@ const pagination = function (goToPage) {
 
 const logout = function () {
   try {
-    helpers.clearHash();
-    helpers.clearNav();
-    helpers.addloginBtn();
-    helpers.addRegistrationpBtn();
+    sessionHelpers.clearHash();
+    sessionHelpers.clearNav();
+    addBtnHelpers.addloginBtn();
+    addBtnHelpers.addRegistrationpBtn();
     loginView.refreshBtn();
     addUserView.refreshBtn();
     model.refreshSession();
@@ -206,18 +196,15 @@ const changeCookingTime = function (data) {
   model.setCookingTime(data);
   model.state.recipe.isAdmin = true;
   recipeView.render(model.state.recipe);
-  confirmationView.addHandlerConfirm(changeCookingTime);
-  confirmationView.init();
-  helpers.hideBookmark();
+  confirmationViewinit();
+  hidingHelpers.hideBookmark();
 };
 
 const deleteRecipe = function () {
   try {
     deleteItemConfimationView.toogleWindow();
     model.deleteCurrentRecipe();
-    resultsView.render(model.getSearchResultsPage());
-    paginationView.render(model.state.search);
-    deleteItemConfimationView.init();
+    updateSearchResults();
     recipeView.refresh();
   } catch (err) {
     paginationView.refresh();
@@ -229,7 +216,7 @@ const servings = function (newServings) {
   model.updateServings(newServings);
 
   recipeView.update(model.state.recipe);
-  if (!model.state.isUser) helpers.hideBookmark();
+  if (!model.state.isUser) hidingHelpers.hideBookmark();
 };
 
 const addbookmarks = function () {
@@ -237,7 +224,6 @@ const addbookmarks = function () {
   else model.deleteBookmark(model.state.recipe.id);
 
   recipeView.update(model.state.recipe);
-
   bookmarksView.render(model.state.bookmarks);
 };
 
@@ -246,9 +232,7 @@ const showlAllRecipes = function () {
   resultsView.renderSpinner();
   model.getAllRecipes();
   setTimeout(function () {
-    resultsView.render(model.getSearchResultsPage());
-    paginationView.render(model.state.search);
-    deleteItemConfimationView.init();
+    updateSearchResults();
   }, REFRESH);
 };
 
@@ -266,4 +250,43 @@ const init = function () {
   persistLogin();
 };
 
+const confirmationViewinit = function () {
+  confirmationView.addHandlerConfirm(changeCookingTime);
+  confirmationView.init();
+};
+
+const logoutInit = function () {
+  addBtnHelpers.addLogoutBtn();
+  addEvListnerHelpers.addlogoutEvListner(logout);
+};
+
+const nullQueryRefresh = function () {
+  paginationView.refresh();
+  model.state.search.results = [];
+  model.state.search.page = 1;
+};
+
+const renderLoadResults = function () {
+  try {
+    resultsView.render(model.getSearchResultsPage());
+    paginationView.render(model.state.search);
+    if (model.state.isAdmin) {
+      deleteItemConfimationView.init();
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+const updateSearchResults = function () {
+  paginationView.render(model.state.search);
+  resultsView.render(model.getSearchResultsPage());
+  deleteItemConfimationView.init();
+};
+
+const refreshPage = function () {
+  recipeView.refresh();
+  resultsView.refresh();
+  paginationView.refresh();
+};
 init();
