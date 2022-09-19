@@ -38,6 +38,7 @@ const controlSearchResults = async function () {
       }
     }, REFRESH);
   } catch (err) {
+    resultsView.renderError(err.message);
     console.log(err);
   }
 };
@@ -104,7 +105,7 @@ const controlAddUser = async function (newUser) {
       MSG_LOAD_TIME * 1000
     );
   } catch (err) {
-    addUserView.renderError();
+    addUserView.renderError(err.message);
     console.error(err);
   }
 };

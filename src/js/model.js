@@ -2,6 +2,7 @@ import { initAdmins } from './data/admins';
 import { initUsers } from './data/users';
 import { initRecipes } from './data/recipes';
 import { RES_PER_PAGE } from './config';
+import recipeView from './views/recipeView';
 
 export const state = {
   username: '',
@@ -22,6 +23,9 @@ export const loadSearchResults = async function (query) {
     state.search.query = query;
 
     const data = await searchLocalStorage(query);
+    if(!data) {
+      throw Error('Recipe Not Found');
+    }
 
     state.search.results = data.map(recipe => {
       return {
@@ -78,11 +82,25 @@ export const isAuthenticated = function (userData) {
 };
 
 export const uploadedUser = function (newUser) {
+  try {
   const users = JSON.parse(localStorage.getItem('users'));
+  const admins = JSON.parse(localStorage.getItem('admins'));
+
+
+  users.forEach(user => {
+    if(user.username === newUser.username)throw Error('This Username is already taken');
+  })
+
+  admins.forEach(admin => {
+    if(admin.username === newUser.username)throw Error('This Username is already taken');
+  })
 
   newUser.bookmarks = [];
   users.push(newUser);
   localStorage.setItem('users', JSON.stringify(users));
+} catch(err) {
+  throw err;
+}
 };
 
 export const uploadRecipe = async function (newRecipe) {
@@ -208,10 +226,15 @@ export const setLocalStorage = function () {
 const searchLocalStorage = async function (query) {
   const recipes = JSON.parse(localStorage.getItem('recipes'));
   query = query.toUpperCase();
-  let result = [];
+  if((!query.includes('PIZZA') && !query.includes('BURGER')) || !recipes) {
+    return false;
+  }
 
+  let result = [];
+  // console.log(query)
   recipes.forEach(recipe => {
-    if (recipe.id.includes(query)) result.push(recipe);
+    const match = recipe.id.toUpperCase();
+    if (match.includes(query)) result.push(recipe);
   });
 
   return result;
@@ -308,7 +331,10 @@ export const deleteCurrentRecipe = function () {
 
   if (getSearchResultsPage().length === 0) {
     if (state.search.page !== 1) state.search.page -= 1;
-    else throw new Error('All Items Deleted !');
+    else {
+      recipeView.refresh();
+      throw new Error('All Items Deleted !');
+    }
   }
   window.location.hash = '';
 };
