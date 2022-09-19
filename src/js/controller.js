@@ -13,20 +13,18 @@ import deleteItemConfimationView from './views/deleteItemConfimationView';
 
 import { MSG_LOAD_TIME, REFRESH } from './config';
 
-const controlSearchResults = async function () {
+const searchResults = async function () {
   try {
+    const query = searchView.getQuery();
     paginationView.refresh();
     resultsView.renderSpinner();
 
-    const query = searchView.getQuery();
-
     if (query === '') {
-      setTimeout(function () {
-        resultsView.renderMessage('⚠️ Invalid Token , Please Try Again !');
-        paginationView.refresh();
-      }, 1);
+      paginationView.refresh();
+      model.state.search.results = [];
+      model.state.search.page = 1;
+      throw Error('Invalid Token , Please Try Again !');
     }
-    if (!query) return;
 
     await model.loadSearchResults(query);
 
@@ -43,7 +41,7 @@ const controlSearchResults = async function () {
   }
 };
 
-const controlRecipes = async function () {
+const recipes = async function () {
   try {
     model.persistLogin();
     const id = window.location.hash.slice(1);
@@ -60,7 +58,7 @@ const controlRecipes = async function () {
 
     recipeView.render(model.state.recipe);
     if (model.state.isAdmin) {
-      confirmationView.addHandlerConfirm(controlChangeCookingTime);
+      confirmationView.addHandlerConfirm(changeCookingTime);
       confirmationView.init();
     }
     if (!model.state.isUser) helpers.hideBookmark();
@@ -70,7 +68,7 @@ const controlRecipes = async function () {
   }
 };
 
-const controlAddRecipe = async function (newRecipe) {
+const addRecipe = async function (newRecipe) {
   try {
     addRecipeView.renderSpinner();
 
@@ -80,7 +78,7 @@ const controlAddRecipe = async function (newRecipe) {
       addRecipeView.renderMessage();
       model.state.recipe.isAdmin = true;
       recipeView.render(model.state.recipe);
-      confirmationView.addHandlerConfirm(controlChangeCookingTime);
+      confirmationView.addHandlerConfirm(changeCookingTime);
       confirmationView.init();
       helpers.hideBookmark();
       window.history.pushState(null, '', `#${model.state.recipe.id}`);
@@ -96,7 +94,7 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
-const controlAddUser = async function (newUser) {
+const addUser = async function (newUser) {
   try {
     model.uploadedUser(newUser);
     addUserView.renderSpinner();
@@ -110,7 +108,7 @@ const controlAddUser = async function (newUser) {
   }
 };
 
-const controlUserLogin = async function (userData) {
+const userLogin = async function (userData) {
   try {
     model.isAuthenticated(userData);
     loginView.renderSpinner();
@@ -121,9 +119,9 @@ const controlUserLogin = async function (userData) {
       helpers.addShowAllRecipesBtn();
       helpers.addCustomRecipeBtn();
       helpers.addLogoutBtn();
-      helpers.addlogoutEvListner(controlLogoutBtn);
-      helpers.addAllRecipesEvListner(controlShowAllRecipes);
-      addRecipeView.addHandlerUpload(controlAddRecipe);
+      helpers.addlogoutEvListner(logout);
+      helpers.addAllRecipesEvListner(showlAllRecipes);
+      addRecipeView.addHandlerUpload(addRecipe);
       addRecipeView.init();
       model.setLoginHash(userData);
       recipeView.refresh();
@@ -134,8 +132,8 @@ const controlUserLogin = async function (userData) {
       helpers.addSessionUserName();
       helpers.addBookmarksBtn();
       helpers.addLogoutBtn();
-      helpers.addlogoutEvListner(controlLogoutBtn);
-      bookmarksView.addHandlerRender(controlBookmarks);
+      helpers.addlogoutEvListner(logout);
+      bookmarksView.addHandlerRender(bookmarks);
       model.setLoginHash(userData);
       model.setBookmarks();
       bookmarksView.render(model.state.bookmarks);
@@ -152,7 +150,7 @@ const controlUserLogin = async function (userData) {
   }
 };
 
-const controlPersistLogin = function () {
+const persistLogin = function () {
   model.persistLogin();
 
   if (model.state.isAdmin) {
@@ -161,32 +159,32 @@ const controlPersistLogin = function () {
     helpers.addShowAllRecipesBtn();
     helpers.addCustomRecipeBtn();
     helpers.addLogoutBtn();
-    helpers.addlogoutEvListner(controlLogoutBtn);
-    helpers.addAllRecipesEvListner(controlShowAllRecipes);
-    addRecipeView.addHandlerUpload(controlAddRecipe);
+    helpers.addlogoutEvListner(logout);
+    helpers.addAllRecipesEvListner(showlAllRecipes);
+    addRecipeView.addHandlerUpload(addRecipe);
     addRecipeView.init();
   } else if (model.state.isUser) {
     helpers.clearNav();
     helpers.addSessionUserName();
     helpers.addBookmarksBtn();
     helpers.addLogoutBtn();
-    helpers.addlogoutEvListner(controlLogoutBtn);
-    bookmarksView.addHandlerRender(controlBookmarks);
+    helpers.addlogoutEvListner(logout);
+    bookmarksView.addHandlerRender(bookmarks);
     bookmarksView.render(model.state.bookmarks);
   }
 };
 
-const controlBookmarks = function () {
+const bookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
-const controlPagination = function (goToPage) {
+const pagination = function (goToPage) {
   resultsView.render(model.getSearchResultsPage(goToPage));
   paginationView.render(model.state.search);
   deleteItemConfimationView.init();
 };
 
-const controlLogoutBtn = function () {
+const logout = function () {
   try {
     helpers.clearHash();
     helpers.clearNav();
@@ -203,17 +201,17 @@ const controlLogoutBtn = function () {
   }
 };
 
-const controlChangeCookingTime = function (data) {
+const changeCookingTime = function (data) {
   confirmationView.toogleWindow();
   model.setCookingTime(data);
   model.state.recipe.isAdmin = true;
   recipeView.render(model.state.recipe);
-  confirmationView.addHandlerConfirm(controlChangeCookingTime);
+  confirmationView.addHandlerConfirm(changeCookingTime);
   confirmationView.init();
   helpers.hideBookmark();
 };
 
-const controlDeleteRecipe = function () {
+const deleteRecipe = function () {
   try {
     deleteItemConfimationView.toogleWindow();
     model.deleteCurrentRecipe();
@@ -227,14 +225,14 @@ const controlDeleteRecipe = function () {
   }
 };
 
-const controlServings = function (newServings) {
+const servings = function (newServings) {
   model.updateServings(newServings);
 
   recipeView.update(model.state.recipe);
   if (!model.state.isUser) helpers.hideBookmark();
 };
 
-const controlAddBookmark = function () {
+const addbookmarks = function () {
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.deleteBookmark(model.state.recipe.id);
 
@@ -243,7 +241,7 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
-const controlShowAllRecipes = function () {
+const showlAllRecipes = function () {
   paginationView.refresh();
   resultsView.renderSpinner();
   model.getAllRecipes();
@@ -255,17 +253,17 @@ const controlShowAllRecipes = function () {
 };
 
 const init = function () {
-  searchView.addHandlerSearch(controlSearchResults);
-  recipeView.addHandlerRender(controlRecipes);
-  recipeView.addHandlerUpdateServings(controlServings);
-  recipeView.addHandlerAddBookmark(controlAddBookmark);
-  paginationView.addHandlerClick(controlPagination);
-  loginView.addHandlerLoginUser(controlUserLogin);
-  addUserView.addHandlerUploadUser(controlAddUser);
-  deleteItemConfimationView.addHandlerConfirm(controlDeleteRecipe);
+  searchView.addHandlerSearch(searchResults);
+  recipeView.addHandlerRender(recipes);
+  recipeView.addHandlerUpdateServings(servings);
+  recipeView.addHandlerAddBookmark(addbookmarks);
+  paginationView.addHandlerClick(pagination);
+  loginView.addHandlerLoginUser(userLogin);
+  addUserView.addHandlerUploadUser(addUser);
+  deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
 
   model.setLocalStorage();
-  controlPersistLogin();
+  persistLogin();
 };
 
 init();

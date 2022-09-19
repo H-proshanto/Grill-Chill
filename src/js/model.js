@@ -21,9 +21,8 @@ export const state = {
 export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
-
     const data = await searchLocalStorage(query);
-    if(!data) {
+    if (!data) {
       throw Error('Recipe Not Found');
     }
 
@@ -71,6 +70,8 @@ export const isAuthenticated = function (userData) {
     state.username = userData.username;
   });
 
+  if (state.isAdmin) return;
+
   users.forEach(users => {
     if (
       users.username === userData.username &&
@@ -83,24 +84,28 @@ export const isAuthenticated = function (userData) {
 
 export const uploadedUser = function (newUser) {
   try {
-  const users = JSON.parse(localStorage.getItem('users'));
-  const admins = JSON.parse(localStorage.getItem('admins'));
+    const users = JSON.parse(localStorage.getItem('users'));
+    const admins = JSON.parse(localStorage.getItem('admins'));
 
+    users.forEach(user => {
+      if (user.username === newUser.username) {
+        throw Error('This Username is already taken');
+      } else if (user.email === newUser.email) {
+        throw Error('This Email is already registered');
+      }
+    });
 
-  users.forEach(user => {
-    if(user.username === newUser.username)throw Error('This Username is already taken');
-  })
+    admins.forEach(admin => {
+      if (admin.username === newUser.username)
+        throw Error('This Username is already taken');
+    });
 
-  admins.forEach(admin => {
-    if(admin.username === newUser.username)throw Error('This Username is already taken');
-  })
-
-  newUser.bookmarks = [];
-  users.push(newUser);
-  localStorage.setItem('users', JSON.stringify(users));
-} catch(err) {
-  throw err;
-}
+    newUser.bookmarks = [];
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const uploadRecipe = async function (newRecipe) {
@@ -154,7 +159,7 @@ export const uploadRecipe = async function (newRecipe) {
     };
 
     const recipes = JSON.parse(localStorage.getItem('recipes'));
-    const size = recipes.length - 1;
+    const size = recipes.length;
     const title = recipe.title.toUpperCase();
     if (title.includes('BURGER')) {
       recipe.id = 'BURGERitem' + size.toString();
@@ -165,7 +170,7 @@ export const uploadRecipe = async function (newRecipe) {
     recipes.push(recipe);
     localStorage.setItem('recipes', JSON.stringify(recipes));
     state.recipe = recipe;
-    state.search.results.push(recipe);
+    state.search.results.unshift(recipe);
   } catch (err) {
     throw err;
   }
@@ -226,7 +231,7 @@ export const setLocalStorage = function () {
 const searchLocalStorage = async function (query) {
   const recipes = JSON.parse(localStorage.getItem('recipes'));
   query = query.toUpperCase();
-  if((!query.includes('PIZZA') && !query.includes('BURGER')) || !recipes) {
+  if ((!query.includes('PIZZA') && !query.includes('BURGER')) || !recipes) {
     return false;
   }
 
