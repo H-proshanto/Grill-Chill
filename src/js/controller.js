@@ -1,9 +1,6 @@
-// import loadResultHTML from './load-components/loadResultHTML';
-// import loadRecipeHTML from './load-components/loadRecipeHTML';
 import * as model from './model';
 import * as addEvListnerHelpers from './helpers/addEvListnerHelpers';
 import * as hidingHelpers from './helpers/hidingHelpers';
-import * as sessionHelpers from './helpers/sessionHelpers';
 import * as addBtnHelpers from './helpers/addBtnHelpers';
 import addRecipeView from './views/addRecipeView';
 import addUserView from './views/addUserView';
@@ -16,7 +13,9 @@ import recipeView from '../js/views/recipeView';
 import confirmationView from '../js/views/confirmationView';
 import deleteItemConfimationView from './views/deleteItemConfimationView';
 
-import { MSG_LOAD_TIME, REFRESH, LOAD_EV_LISTNERS } from './config';
+import { MSG_LOAD_TIME, REFRESH, LOAD_PAGE } from './config';
+import deleteItemConfimationView from './views/deleteItemConfimationView';
+import confirmationView from './views/confirmationView';
 
 const searchResults = async function () {
   try {
@@ -113,28 +112,9 @@ const userLogin = async function (userData) {
     model.isAuthenticated(userData);
     loginView.renderSpinner();
     if (model.state.isAdmin || model.state.isUser) {
-      sessionHelpers.clearNav();
-      hidingHelpers.hideModal();
-      addBtnHelpers.addSessionUserName();
-    }
-
-    if (model.state.isAdmin) {
-      addBtnHelpers.addShowAllRecipesBtn();
-      addBtnHelpers.addCustomRecipeBtn();
-      logoutInit();
-      addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
-      addRecipeView.addHandlerUpload(addRecipe);
-      addRecipeView.init();
+      loginView.renderMessage();
+      window.location.href = 'loginpage.html';
       model.setLoginHash(userData);
-      refreshPage();
-    } else if (model.state.isUser) {
-      addBtnHelpers.addBookmarksBtn();
-      logoutInit();
-      bookmarksView.addHandlerRender(bookmarks);
-      model.setLoginHash(userData);
-      model.setBookmarks();
-      bookmarksView.render(model.state.bookmarks);
-      refreshPage();
     } else {
       setTimeout(() => {
         loginView.renderError();
@@ -145,30 +125,7 @@ const userLogin = async function (userData) {
   }
 };
 
-const persistLogin = function () {
-  model.persistLogin();
-
-  if (model.state.isAdmin || model.state.isUser) {
-    sessionHelpers.clearNav();
-    addBtnHelpers.addSessionUserName();
-  }
-
-  if (model.state.isAdmin) {
-    addBtnHelpers.addShowAllRecipesBtn();
-    addBtnHelpers.addCustomRecipeBtn();
-    logoutInit();
-    addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
-    addRecipeView.addHandlerUpload(addRecipe);
-    addRecipeView.init();
-  } else if (model.state.isUser) {
-    addBtnHelpers.addBookmarksBtn();
-    logoutInit();
-    bookmarksView.addHandlerRender(bookmarks);
-    bookmarksView.render(model.state.bookmarks);
-  }
-};
-
-const bookmarks = function () {
+const loadbookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
@@ -180,8 +137,8 @@ const pagination = function (goToPage) {
 
 const logout = function () {
   try {
-    window.location.href = 'index.html';
     model.refreshSession();
+    window.location.href = 'index.html';
   } catch (err) {
     console.error(err);
   }
@@ -234,24 +191,48 @@ const showlAllRecipes = function () {
 
 const init = function () {
   setTimeout(() => {
-    loginView.setLoginView();
-    loginView.addHandlerLoginUser(userLogin);
-    addUserView.btnRefresh();
-    addUserView.addHandlerUploadUser(addUser);
+    model.persistLogin();
+    if (!model.state.isAdmin && !model.state.isUser) {
+      loginView.setLoginView();
+      addUserView.setAddUserView();
+      loginView.addHandlerLoginUser(userLogin);
+      addUserView.addHandlerUploadUser(addUser);
+    } else {
+      if (model.state.isAdmin) {
+        addBtnHelpers.addSessionUserName();
+        addBtnHelpers.addShowAllRecipesBtn();
+        addBtnHelpers.addCustomRecipeBtn();
+        addBtnHelpers.addLogoutBtn();
+        addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
+        deleteItemConfimationView.setDeleteConfirmView();
+        deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
+        confirmationView.setConfirmView();
+        confirmationView.addHandlerConfirm(changeCookingTime);
+        addRecipeView.setAddRecipeView();
+        addRecipeView.addHandlerUpload(addRecipe);
+        addEvListnerHelpers.addlogoutEvListner(logout);
+      }
+      if (model.state.isUser) {
+        addBtnHelpers.addSessionUserName();
+        addBtnHelpers.addBookmarksBtn();
+        bookmarksView.setBookmarksView();
+        loadbookmarks();
+        addBtnHelpers.addLogoutBtn();
+        addEvListnerHelpers.addlogoutEvListner(logout);
+      }
+    }
     searchView.setSearchView();
-    searchView.addHandlerSearch(searchResults);
     paginationView.setPaginationView();
-    paginationView.addHandlerClick(pagination);
     resultsView.setResultsView();
     recipeView.setRecipeView();
+    searchView.addHandlerSearch(searchResults);
+    paginationView.addHandlerClick(pagination);
     recipeView.addHandlerRender(recipes);
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
-  }, LOAD_EV_LISTNERS);
-  deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
+  }, LOAD_PAGE);
 
   model.setLocalStorage();
-  persistLogin();
 };
 
 const confirmationViewinit = function () {

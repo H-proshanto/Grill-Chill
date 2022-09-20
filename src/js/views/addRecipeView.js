@@ -3,20 +3,14 @@ import { REFRESH } from '../config';
 import icons from 'url:../../img/icons.svg';
 
 class AddRecipeView extends View {
-  _parentEl = document.querySelector('.upload');
-  _message = 'Recipe was successfully uploaded';
-
-  _window = document.querySelector('.add-recipe-window');
-  _overlay = document.querySelector('.add-recipe-overlay');
-  _btnOpen = null;
-  _btnClose = document.querySelector('.add-recipe-btn--close-modal');
-
-  constructor() {
-    super();
-  }
-
-  init() {
+  setAddRecipeView() {
+    this._parentEl = document.querySelector('.upload');
+    this._message = 'Recipe was successfully uploaded';
+    this._window = document.querySelector('.add-recipe-window');
+    this._overlay = document.querySelector('.add-recipe-overlay');
     this._btnOpen = document.querySelector('.nav__btn--add-recipe');
+    this._btnClose = document.querySelector('.add-recipe-btn--close-modal');
+
     this._addHandlerShowWindow();
     if (this._hide === undefined) this._addHandlerHideWindow();
     this._hide = true;

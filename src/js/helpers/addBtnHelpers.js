@@ -70,11 +70,15 @@ export const addBookmarksBtn = function () {
 };
 
 export const addSessionUserName = function () {
-  const parentEl = document.querySelector('.nav__list');
+  const parentEl = document.querySelector('.nav-container');
   const html = `
-  <li class="nav__item">
-    <span class = "userName">Hello, ${state.username}</span>
-  </li>`;
+  <nav class="nav">
+    <ul class="nav__list">
+      <li class="nav__item">
+        <span class = "userName">Hello, ${state.username}</span>
+      </li>
+    </ul>
+  </nav>`;
   parentEl.insertAdjacentHTML('afterbegin', html);
 };
 
