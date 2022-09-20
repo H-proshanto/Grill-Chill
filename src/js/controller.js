@@ -221,17 +221,15 @@ const init = function () {
         addEvListnerHelpers.addlogoutEvListner(logout);
       }
     }
-    setTimeout(() => {
-      searchView.setSearchView();
-      paginationView.setPaginationView();
-      resultsView.setResultsView();
-      recipeView.setRecipeView();
-      searchView.addHandlerSearch(searchResults);
-      paginationView.addHandlerClick(pagination);
-      recipeView.addHandlerRender(recipes);
-      recipeView.addHandlerUpdateServings(servings);
-      recipeView.addHandlerAddBookmark(addbookmarks);
-    }, 1300);
+    searchView.setSearchView();
+    paginationView.setPaginationView();
+    resultsView.setResultsView();
+    recipeView.setRecipeView();
+    searchView.addHandlerSearch(searchResults);
+    paginationView.addHandlerClick(pagination);
+    recipeView.addHandlerRender(recipes);
+    recipeView.addHandlerUpdateServings(servings);
+    recipeView.addHandlerAddBookmark(addbookmarks);
   }, LOAD_PAGE);
 
   model.setLocalStorage();
