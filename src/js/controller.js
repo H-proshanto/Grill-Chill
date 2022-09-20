@@ -3,7 +3,7 @@ import * as addEvListnerHelpers from './helpers/addEvListnerHelpers';
 import * as hidingHelpers from './helpers/hidingHelpers';
 import * as sessionHelpers from './helpers/sessionHelpers';
 import * as addBtnHelpers from './helpers/addBtnHelpers';
-import addRecipeView from './views/addRecipeView';
+// import addRecipeView from './views/addRecipeView';
 import addUserView from './views/addUserView';
 import loginView from './views/loginView';
 import bookmarksView from './views/bookmarksView';
@@ -11,8 +11,8 @@ import searchView from './views/searchView';
 import resultsView from './views/resultsView';
 import paginationView from './views/paginationView';
 import recipeView from '../js/views/recipeView';
-import confirmationView from '../js/views/confirmationView';
-import deleteItemConfimationView from './views/deleteItemConfimationView';
+// import confirmationView from '../js/views/confirmationView';
+// import deleteItemConfimationView from './views/deleteItemConfimationView';
 
 import { MSG_LOAD_TIME, REFRESH, LOAD_PAGE } from './config';
 
@@ -248,7 +248,7 @@ const init = function () {
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
   }, LOAD_PAGE);
-  deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
+  // deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
 
   model.setLocalStorage();
 
