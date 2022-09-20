@@ -1,3 +1,5 @@
+// import loadResultHTML from './load-components/loadResultHTML';
+// import loadRecipeHTML from './load-components/loadRecipeHTML';
 import * as model from './model';
 import * as addEvListnerHelpers from './helpers/addEvListnerHelpers';
 import * as hidingHelpers from './helpers/hidingHelpers';
@@ -178,7 +180,7 @@ const pagination = function (goToPage) {
 
 const logout = function () {
   try {
-    window.location.href = '../../index.html';
+    window.location.href = 'index.html';
     model.refreshSession();
   } catch (err) {
     console.error(err);
@@ -231,13 +233,21 @@ const showlAllRecipes = function () {
 };
 
 const init = function () {
-  searchView.addHandlerSearch(searchResults);
-  recipeView.addHandlerRender(recipes);
-  recipeView.addHandlerUpdateServings(servings);
-  recipeView.addHandlerAddBookmark(addbookmarks);
-  paginationView.addHandlerClick(pagination);
-  loginView.addHandlerLoginUser(userLogin);
-  addUserView.addHandlerUploadUser(addUser);
+  setTimeout(() => {
+    loginView.btnRefresh();
+    loginView.addHandlerLoginUser(userLogin);
+    addUserView.btnRefresh();
+    addUserView.addHandlerUploadUser(addUser);
+    searchView.setSearchView();
+    searchView.addHandlerSearch(searchResults);
+    paginationView.setPaginationView();
+    paginationView.addHandlerClick(pagination);
+    resultsView.setResultsView();
+    recipeView.setRecipeView();
+    recipeView.addHandlerRender(recipes);
+    recipeView.addHandlerUpdateServings(servings);
+    recipeView.addHandlerAddBookmark(addbookmarks);
+  }, 100);
   deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
 
   model.setLocalStorage();
@@ -283,4 +293,5 @@ const refreshPage = function () {
   resultsView.refresh();
   paginationView.refresh();
 };
+
 init();

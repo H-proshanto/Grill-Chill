@@ -11,8 +11,8 @@ class LoginView extends View {
   _btnOpen = document.querySelector('.nav__btn--login');
   _btnClose = document.querySelector('.login-btn--close-modal');
 
-  constructor() {
-    super();
+  btnRefresh() {
+    this._btnOpen = document.querySelector('.nav__btn--login');
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
   }

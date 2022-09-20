@@ -11,8 +11,8 @@ class AddUserView extends View {
   _btnOpen = document.querySelector('.nav__btn--registration');
   _btnClose = document.querySelector('.registration-btn--close-modal');
 
-  constructor() {
-    super();
+  btnRefresh() {
+    this._btnOpen = document.querySelector('.nav__btn--registration');
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
   }

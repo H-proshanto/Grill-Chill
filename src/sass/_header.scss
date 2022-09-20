@@ -6,9 +6,9 @@
   justify-content: flex-start;
 
   &__logo {
-    margin-left: 4.5rem;
-    height: 7rem;
-    display: block;
+    display: flex;
+    width: 70px;
+    margin-left: 20px;
   }
 }
 
@@ -159,5 +159,17 @@
   padding: 0 -2rem;
 
   display: flex;
+  align-items: center;
+}
+
+.nav-container {
+  display: flex;
+  height: 97px;
+  margin-left: auto;
+}
+
+.search-bar-container {
+  display: flex;
+  height: 50px;
   align-items: center;
 }
