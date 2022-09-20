@@ -2,24 +2,17 @@ import View from './View';
 import { REFRESH } from '../config';
 
 class LoginView extends View {
-  _parentEl = document.querySelector('.login__form');
   _message = 'Logged In Successfully';
   _errorMessage = 'Login failed. Please try again!';
 
-  _window = document.querySelector('.login-window');
-  _overlay = document.querySelector('.login-overlay');
-  _btnOpen = document.querySelector('.nav__btn--login');
-  _btnClose = document.querySelector('.login-btn--close-modal');
-
-  constructor() {
-    super();
+  setLoginView() {
+    this._parentEl = document.querySelector('.login__form');
+    this._window = document.querySelector('.login-window');
+    this._overlay = document.querySelector('.login-overlay');
+    this._btnOpen = document.querySelector('.nav__btn--login');
+    this._btnClose = document.querySelector('.login-btn--close-modal');
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
-  }
-
-  refreshBtn() {
-    this._btnOpen = document.querySelector('.nav__btn--login');
-    this._addHandlerShowWindow();
   }
 
   toogleWindow() {
@@ -48,7 +41,9 @@ class LoginView extends View {
     const overlay = this._overlay;
     const bindedToggleWindow = this.toogleWindow.bind(this);
 
-    this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
+    this._btnClose.addEventListener('click', e => {
+      if (!overlay.classList.contains('hidden')) bindedToggleWindow();
+    });
     this._overlay.addEventListener('click', e => {
       if (!overlay.classList.contains('hidden')) bindedToggleWindow();
     });

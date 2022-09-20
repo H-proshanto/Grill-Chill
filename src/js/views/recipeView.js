@@ -4,9 +4,12 @@ import timeIcon from '../../img/time-icon.svg';
 import { getFraction } from '../helpers/mathHelpers';
 
 class RecipeView extends View {
-  _parentEl = document.querySelector('.recipe');
   _errorMessage = 'We could not find that recipe. Please try another one!';
   _message;
+
+  setRecipeView() {
+    this._parentEl = document.querySelector('.recipe');
+  }
 
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev =>

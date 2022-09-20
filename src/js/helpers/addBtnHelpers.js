@@ -1,38 +1,6 @@
 import icons from '../../img/icons.svg';
 import { state } from '../model';
 
-export const addloginBtn = function () {
-  const parentEl = document.querySelector('.nav__list');
-
-  const html = `
-  <li class="nav__item">
-    <button class="nav__btn nav__btn--login">
-      <svg class="nav__icon">
-        <use href="${icons}#icon-user"></use>
-      </svg>
-      <span>Sign In</span>
-    </button>
-  </li>`;
-
-  parentEl.insertAdjacentHTML('beforeend', html);
-};
-
-export const addRegistrationpBtn = function () {
-  const parentEl = document.querySelector('.nav__list');
-
-  const html = `
-  <li class="nav__item">
-    <button class="nav__btn nav__btn--registration">
-      <svg class="nav__icon">
-        <use href="${icons}#icon-arrow-right"></use>
-      </svg>
-      <span>Sign Up</span>
-    </button>
-  </li>`;
-
-  parentEl.insertAdjacentHTML('beforeend', html);
-};
-
 export const addCustomRecipeBtn = function () {
   const parentEl = document.querySelector('.nav__list');
 

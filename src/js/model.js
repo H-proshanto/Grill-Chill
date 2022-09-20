@@ -58,8 +58,8 @@ export const updateResultState = function () {
 };
 
 export const isAuthenticated = function (userData) {
-  const admins = JSON.parse(localStorage.getItem('admins'));
-  const users = JSON.parse(localStorage.getItem('users'));
+  const admins = getAdmins();
+  const users = getUsers();
 
   admins.forEach(admin => {
     if (
@@ -84,8 +84,8 @@ export const isAuthenticated = function (userData) {
 
 export const uploadedUser = function (newUser) {
   try {
-    const users = JSON.parse(localStorage.getItem('users'));
-    const admins = JSON.parse(localStorage.getItem('admins'));
+    const users = getUsers();
+    const admins = getAdmins();
 
     users.forEach(user => {
       if (user.username === newUser.username) {
@@ -177,8 +177,8 @@ export const uploadRecipe = async function (newRecipe) {
 };
 
 export const setLoginHash = function (userData) {
-  const admins = JSON.parse(localStorage.getItem('admins'));
-  const users = JSON.parse(localStorage.getItem('users'));
+  const admins = getAdmins();
+  const users = getUsers();
 
   for (let i = 0; i < admins.length; i++) {
     if (
@@ -236,7 +236,6 @@ const searchLocalStorage = async function (query) {
   }
 
   let result = [];
-  // console.log(query)
   recipes.forEach(recipe => {
     const match = recipe.id.toUpperCase();
     if (match.includes(query)) result.push(recipe);
@@ -303,7 +302,7 @@ export const setCookingTime = function (time) {
 export const deleteCurrentRecipe = function () {
   const id = window.location.hash.slice(1);
   const recipes = JSON.parse(localStorage.getItem('recipes'));
-  const users = JSON.parse(localStorage.getItem('users'));
+  const users = getUsers();
   let index;
 
   for (let i = 0; i < users.length; i++) {
@@ -407,4 +406,12 @@ export const getAllRecipes = function () {
     };
   });
   state.search.page = 1;
+};
+
+const getUsers = () => {
+  return JSON.parse(localStorage.getItem('users'));
+};
+
+const getAdmins = () => {
+  return JSON.parse(localStorage.getItem('admins'));
 };

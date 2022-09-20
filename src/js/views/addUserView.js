@@ -11,15 +11,10 @@ class AddUserView extends View {
   _btnOpen = document.querySelector('.nav__btn--registration');
   _btnClose = document.querySelector('.registration-btn--close-modal');
 
-  constructor() {
-    super();
-    this._addHandlerShowWindow();
-    this._addHandlerHideWindow();
-  }
-
-  refreshBtn() {
+  btnRefresh() {
     this._btnOpen = document.querySelector('.nav__btn--registration');
     this._addHandlerShowWindow();
+    this._addHandlerHideWindow();
   }
 
   toogleWindow() {
@@ -48,7 +43,9 @@ class AddUserView extends View {
     const overlay = this._overlay;
     const bindedToggleWindow = this.toogleWindow.bind(this);
 
-    this._btnClose.addEventListener('click', this.toogleWindow.bind(this));
+    this._btnClose.addEventListener('click', e => {
+      if (!overlay.classList.contains('hidden')) bindedToggleWindow();
+    });
     this._overlay.addEventListener('click', e => {
       if (!overlay.classList.contains('hidden')) bindedToggleWindow();
     });
