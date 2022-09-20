@@ -231,7 +231,7 @@ const init = function () {
       recipeView.addHandlerRender(recipes);
       recipeView.addHandlerUpdateServings(servings);
       recipeView.addHandlerAddBookmark(addbookmarks);
-    }, LOAD_PAGE * 3);
+    }, 1300);
   }, LOAD_PAGE);
 
   model.setLocalStorage();
