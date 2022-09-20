@@ -221,15 +221,17 @@ const init = function () {
         addEvListnerHelpers.addlogoutEvListner(logout);
       }
     }
-    searchView.setSearchView();
-    paginationView.setPaginationView();
-    resultsView.setResultsView();
-    recipeView.setRecipeView();
-    searchView.addHandlerSearch(searchResults);
-    paginationView.addHandlerClick(pagination);
-    recipeView.addHandlerRender(recipes);
-    recipeView.addHandlerUpdateServings(servings);
-    recipeView.addHandlerAddBookmark(addbookmarks);
+    setTimeout(() => {
+      searchView.setSearchView();
+      paginationView.setPaginationView();
+      resultsView.setResultsView();
+      recipeView.setRecipeView();
+      searchView.addHandlerSearch(searchResults);
+      paginationView.addHandlerClick(pagination);
+      recipeView.addHandlerRender(recipes);
+      recipeView.addHandlerUpdateServings(servings);
+      recipeView.addHandlerAddBookmark(addbookmarks);
+    }, LOAD_PAGE * 2);
   }, LOAD_PAGE);
 
   model.setLocalStorage();
