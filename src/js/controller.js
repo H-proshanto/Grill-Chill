@@ -234,7 +234,7 @@ const showlAllRecipes = function () {
 
 const init = function () {
   setTimeout(() => {
-    loginView.btnRefresh();
+    loginView.setLoginView();
     loginView.addHandlerLoginUser(userLogin);
     addUserView.btnRefresh();
     addUserView.addHandlerUploadUser(addUser);
