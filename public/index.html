@@ -21,11 +21,13 @@
 
     <link rel="stylesheet" href="../src/sass/main.scss" />
     <script defer src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script defer src="../src/js/load-components/loadNavbar.js"></script>
-    <script defer src="../src/js/load-components/loadSearchBar.js"></script>
-    <script defer src="../src/js/load-components/loadResultHTML.js"></script>
-    <script defer src="../src/js/load-components/loadRecipeHTML.js"></script>
-    <script defer src="../src/js/load-components/loadLoginForm.js"></script>
+    <script defer src="../src/js/components-loader/loadNavbar.js"></script>
+    <script defer src="../src/js/components-loader/loadSearchBar.js"></script>
+    <script defer src="../src/js/components-loader/loadResultHTML.js"></script>
+    <script defer src="../src/js/components-loader/loadRecipeHTML.js"></script>
+    <script defer src="../src/js/components-loader/loadLoginForm.js"></script>
+    <!-- prettier-ignore -->
+    <script defer src="../src/js/components-loader/loadRegistrationForm.js"></script>
     <script type="module" defer src="../src/js/controller.js"></script>
 
     <title>Grill & Chill</title>
@@ -215,27 +217,8 @@
       </form>
     </div>
 
-    <div class="registration-overlay hidden"></div>
-    <div class="registration-window hidden">
-      <button class="registration-btn--close-modal">&times;</button>
-      <h2 class="registration__header">Welcome to Grill & Chill</h2>
-      <form class="registration__form">
-        <label>Username</label>
-        <input type="text" required placeholder="User Name" name="username" />
-        <label>Password</label>
-        <input
-          type="password"
-          required
-          placeholder="Password"
-          name="password"
-        />
-        <label>Email Address</label>
-        <input type="email" required placeholder="Email Address" name="email" />
-        <button class="btn registration-btn">Register &rarr;</button>
-      </form>
-    </div>
-
-    <div class="login-container"></div>
+    <div class="registration-form-container"></div>
+    <div class="login-form-container"></div>
 
     <div class="confirmation-overlay hidden"></div>
     <div class="confirmation-window hidden">

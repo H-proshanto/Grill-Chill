@@ -1,5 +1,3 @@
-// import loadResultHTML from './load-components/loadResultHTML';
-// import loadRecipeHTML from './load-components/loadRecipeHTML';
 import * as model from './model';
 import * as addEvListnerHelpers from './helpers/addEvListnerHelpers';
 import * as hidingHelpers from './helpers/hidingHelpers';
@@ -235,15 +233,15 @@ const showlAllRecipes = function () {
 const init = function () {
   setTimeout(() => {
     loginView.setLoginView();
-    loginView.addHandlerLoginUser(userLogin);
-    addUserView.btnRefresh();
-    addUserView.addHandlerUploadUser(addUser);
+    addUserView.setAddUserView();
     searchView.setSearchView();
-    searchView.addHandlerSearch(searchResults);
     paginationView.setPaginationView();
-    paginationView.addHandlerClick(pagination);
     resultsView.setResultsView();
     recipeView.setRecipeView();
+    loginView.addHandlerLoginUser(userLogin);
+    addUserView.addHandlerUploadUser(addUser);
+    searchView.addHandlerSearch(searchResults);
+    paginationView.addHandlerClick(pagination);
     recipeView.addHandlerRender(recipes);
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
