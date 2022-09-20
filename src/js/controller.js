@@ -14,7 +14,7 @@ import recipeView from '../js/views/recipeView';
 import confirmationView from '../js/views/confirmationView';
 import deleteItemConfimationView from './views/deleteItemConfimationView';
 
-import { MSG_LOAD_TIME, REFRESH, LOAD_EV_LISTNERS } from './config';
+import { MSG_LOAD_TIME, REFRESH, LOAD_PAGE } from './config';
 
 const searchResults = async function () {
   try {
@@ -144,26 +144,28 @@ const userLogin = async function (userData) {
 };
 
 const persistLogin = function () {
-  model.persistLogin();
+  setTimeout(() => {
+    model.persistLogin();
 
-  if (model.state.isAdmin || model.state.isUser) {
-    sessionHelpers.clearNav();
-    addBtnHelpers.addSessionUserName();
-  }
+    if (model.state.isAdmin || model.state.isUser) {
+      sessionHelpers.clearNav();
+      addBtnHelpers.addSessionUserName();
+    }
 
-  if (model.state.isAdmin) {
-    addBtnHelpers.addShowAllRecipesBtn();
-    addBtnHelpers.addCustomRecipeBtn();
-    logoutInit();
-    addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
-    addRecipeView.addHandlerUpload(addRecipe);
-    addRecipeView.init();
-  } else if (model.state.isUser) {
-    addBtnHelpers.addBookmarksBtn();
-    logoutInit();
-    bookmarksView.addHandlerRender(bookmarks);
-    bookmarksView.render(model.state.bookmarks);
-  }
+    if (model.state.isAdmin) {
+      addBtnHelpers.addShowAllRecipesBtn();
+      addBtnHelpers.addCustomRecipeBtn();
+      logoutInit();
+      addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
+      addRecipeView.addHandlerUpload(addRecipe);
+      addRecipeView.init();
+    } else if (model.state.isUser) {
+      addBtnHelpers.addBookmarksBtn();
+      logoutInit();
+      bookmarksView.addHandlerRender(bookmarks);
+      bookmarksView.render(model.state.bookmarks);
+    }
+  }, LOAD_PAGE);
 };
 
 const bookmarks = function () {
@@ -245,11 +247,13 @@ const init = function () {
     recipeView.addHandlerRender(recipes);
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
-  }, LOAD_EV_LISTNERS);
+  }, LOAD_PAGE);
   deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
 
   model.setLocalStorage();
-  persistLogin();
+
+  // Turned off persistlogin for testing
+  // persistLogin();
 };
 
 const confirmationViewinit = function () {

@@ -4,7 +4,7 @@
   "description": "Recipe Searching Web Application",
   "scripts": {
     "start": "parcel public/index.html public/navbar.html public/searchbar.html public/result.html public/recipe.html public/loginform.html public/registrationform.html",
-    "build": "parcel build public/index.html public/navbar.html public/searchbar.html public/result.html public/recipe.html --no-scope-hoist --dist-dir ./dist"
+    "build": "parcel build public/index.html public/navbar.html public/searchbar.html public/result.html public/recipe.html public/loginform.html public/registrationform.html --no-scope-hoist --dist-dir ./dist"
   },
   "repository": {
     "type": "git",
