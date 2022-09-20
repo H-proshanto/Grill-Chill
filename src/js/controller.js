@@ -16,7 +16,7 @@ import recipeView from '../js/views/recipeView';
 import confirmationView from '../js/views/confirmationView';
 import deleteItemConfimationView from './views/deleteItemConfimationView';
 
-import { MSG_LOAD_TIME, REFRESH } from './config';
+import { MSG_LOAD_TIME, REFRESH, LOAD_EV_LISTNERS } from './config';
 
 const searchResults = async function () {
   try {
@@ -247,7 +247,7 @@ const init = function () {
     recipeView.addHandlerRender(recipes);
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
-  }, 100);
+  }, LOAD_EV_LISTNERS);
   deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
 
   model.setLocalStorage();
