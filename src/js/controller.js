@@ -3,7 +3,7 @@ import * as addEvListnerHelpers from './helpers/addEvListnerHelpers';
 import * as hidingHelpers from './helpers/hidingHelpers';
 import * as sessionHelpers from './helpers/sessionHelpers';
 import * as addBtnHelpers from './helpers/addBtnHelpers';
-// import addRecipeView from './views/addRecipeView';
+import addRecipeView from './views/addRecipeView';
 import addUserView from './views/addUserView';
 import loginView from './views/loginView';
 import bookmarksView from './views/bookmarksView';
@@ -110,34 +110,36 @@ const userLogin = async function (userData) {
   try {
     model.isAuthenticated(userData);
     loginView.renderSpinner();
-    if (model.state.isAdmin || model.state.isUser) {
-      sessionHelpers.clearNav();
-      hidingHelpers.hideModal();
-      addBtnHelpers.addSessionUserName();
-    }
+    setTimeout(() => {
+      if (model.state.isAdmin || model.state.isUser) {
+        loginView.renderMessage();
+        window.location.href = 'loginpage.html';
+        model.setLoginHash(userData);
+      }
+    }, MSG_LOAD_TIME * 1000);
 
-    if (model.state.isAdmin) {
-      addBtnHelpers.addShowAllRecipesBtn();
-      addBtnHelpers.addCustomRecipeBtn();
-      logoutInit();
-      addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
-      addRecipeView.addHandlerUpload(addRecipe);
-      addRecipeView.init();
-      model.setLoginHash(userData);
-      refreshPage();
-    } else if (model.state.isUser) {
-      addBtnHelpers.addBookmarksBtn();
-      logoutInit();
-      bookmarksView.addHandlerRender(bookmarks);
-      model.setLoginHash(userData);
-      model.setBookmarks();
-      bookmarksView.render(model.state.bookmarks);
-      refreshPage();
-    } else {
-      setTimeout(() => {
-        loginView.renderError();
-      }, MSG_LOAD_TIME * 600);
-    }
+    // if (model.state.isAdmin) {
+    //   addBtnHelpers.addShowAllRecipesBtn();
+    //   addBtnHelpers.addCustomRecipeBtn();
+    //   logoutInit();
+    //   addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
+    //   addRecipeView.addHandlerUpload(addRecipe);
+    //   addRecipeView.init();
+    //   model.setLoginHash(userData);
+    //   refreshPage();
+    // } else if (model.state.isUser) {
+    //   addBtnHelpers.addBookmarksBtn();
+    //   logoutInit();
+    //   bookmarksView.addHandlerRender(bookmarks);
+    //   model.setLoginHash(userData);
+    //   model.setBookmarks();
+    //   bookmarksView.render(model.state.bookmarks);
+    //   refreshPage();
+    // } else {
+    //   setTimeout(() => {
+    //     loginView.renderError();
+    //   }, MSG_LOAD_TIME * 600);
+    // }
   } catch (err) {
     console.error(err);
   }
@@ -234,21 +236,36 @@ const showlAllRecipes = function () {
 
 const init = function () {
   setTimeout(() => {
-    loginView.setLoginView();
-    addUserView.setAddUserView();
+    model.persistLogin();
+    if (!model.state.isAdmin && !model.state.isUser) {
+      loginView.setLoginView();
+      addUserView.setAddUserView();
+      loginView.addHandlerLoginUser(userLogin);
+      addUserView.addHandlerUploadUser(addUser);
+    } else if (model.state.isAdmin) {
+      addBtnHelpers.addSessionUserName();
+      addBtnHelpers.addShowAllRecipesBtn();
+      addEvListnerHelpers.addAllRecipesEvListner(showlAllRecipes);
+      // deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
+      addBtnHelpers.addCustomRecipeBtn();
+      addBtnHelpers.addLogoutBtn();
+      addEvListnerHelpers.addlogoutEvListner(logout);
+    } else if (model.state.isUser) {
+      addBtnHelpers.addSessionUserName();
+      addBtnHelpers.addBookmarksBtn();
+      addBtnHelpers.addLogoutBtn();
+      addEvListnerHelpers.addlogoutEvListner(logout);
+    }
     searchView.setSearchView();
     paginationView.setPaginationView();
     resultsView.setResultsView();
     recipeView.setRecipeView();
-    loginView.addHandlerLoginUser(userLogin);
-    addUserView.addHandlerUploadUser(addUser);
     searchView.addHandlerSearch(searchResults);
     paginationView.addHandlerClick(pagination);
     recipeView.addHandlerRender(recipes);
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
   }, LOAD_PAGE);
-  // deleteItemConfimationView.addHandlerConfirm(deleteRecipe);
 
   model.setLocalStorage();
 
