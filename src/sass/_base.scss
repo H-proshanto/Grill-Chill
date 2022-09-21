@@ -19,9 +19,11 @@ $grad1: linear-gradient(to right bottom, $color-grad-5, $color-grad-6);
 $grad2: linear-gradient(to right bottom, $color-grad-7, $color-grad-5);
 
 $bp-large: 78.15em;
-$bp-medium: 61.25em;
-$bp-small: 37.5em;
-$bp-smallest: 31.25em;
+$bp-medium: 67.25em;
+$bp-small: 47.5em;
+$bp-smallest: 41.25em;
+$bp-mobile: 20rem;
+$bp-mobile-smaller: 590px;
 
 * {
   margin: 0;
@@ -41,6 +43,25 @@ html {
   @media only screen and (max-width: $bp-medium) {
     font-size: 41.5%;
   }
+
+  @media only screen and (max-width: $bp-small) {
+    font-size: 35.5%;
+  }
+
+  @media only screen and (max-width: $bp-smallest) {
+    font-size: 32%;
+  }
+
+  @media only screen and (max-width: $bp-mobile) {
+    font-size: 10%;
+  }
+
+  @media only screen and (max-width: $bp-mobile-smaller) {
+    font-size: 10%;
+    .header__logo {
+      width: 5%;
+    }
+  }
 }
 
 body {
@@ -52,6 +73,9 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   min-height: calc(100vh - 2 * 4vw);
+  @media only screen and (max-width: $bp-mobile-smaller) {
+    max-height: 230;
+  }
 }
 
 .container {
