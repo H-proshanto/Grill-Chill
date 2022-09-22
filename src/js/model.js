@@ -22,6 +22,7 @@ export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
     const data = await searchLocalStorage(query);
+
     if (!data) {
       throw Error('Recipe Not Found');
     }
@@ -61,25 +62,10 @@ export const isAuthenticated = function (userData) {
   const admins = getAdmins();
   const users = getUsers();
 
-  admins.forEach(admin => {
-    if (
-      admin.username === userData.username &&
-      admin.password === userData.password
-    )
-      state.isAdmin = true;
-    state.username = userData.username;
-  });
+  checkAdminAuth(admins, userData);
 
   if (state.isAdmin) return;
-
-  users.forEach(users => {
-    if (
-      users.username === userData.username &&
-      users.password === userData.password
-    )
-      state.isUser = true;
-    state.username = userData.username;
-  });
+  checkUserAuth(users, userData);
 };
 
 export const uploadedUser = function (newUser) {
@@ -87,18 +73,13 @@ export const uploadedUser = function (newUser) {
     const users = getUsers();
     const admins = getAdmins();
 
-    users.forEach(user => {
-      if (user.username === newUser.username) {
-        throw Error('This Username is already taken');
-      } else if (user.email === newUser.email) {
-        throw Error('This Email is already registered');
-      }
-    });
+    if (!verifyUsername(admins, users, newUser)) {
+      throw Error('This Username is already registered');
+    }
 
-    admins.forEach(admin => {
-      if (admin.username === newUser.username)
-        throw Error('This Username is already taken');
-    });
+    if (!verifyEmail(users, newUser)) {
+      throw Error('This Email is already registered');
+    }
 
     newUser.bookmarks = [];
     users.push(newUser);
@@ -414,4 +395,56 @@ const getUsers = () => {
 
 const getAdmins = () => {
   return JSON.parse(localStorage.getItem('admins'));
+};
+
+const checkAdminAuth = (admins, userData) => {
+  admins.forEach(admin => {
+    if (
+      admin.username === userData.username &&
+      admin.password === userData.password
+    )
+      state.isAdmin = true;
+    state.username = userData.username;
+  });
+};
+
+const checkUserAuth = (users, userData) => {
+  users.forEach(user => {
+    if (
+      user.username === userData.username &&
+      user.password === userData.password
+    )
+      state.isUser = true;
+    state.username = userData.username;
+  });
+};
+
+const verifyUsername = (admins, users, newUser) => {
+  let verifiedStatus = true;
+
+  users.forEach(user => {
+    if (user.username === newUser.username) {
+      verifiedStatus = false;
+    }
+  });
+
+  admins.forEach(admin => {
+    if (admin.username === newUser.username) {
+      verifiedStatus = false;
+    }
+  });
+
+  return verifiedStatus;
+};
+
+const verifyEmail = (users, newUser) => {
+  let verifiedStatus = true;
+
+  users.forEach(user => {
+    if (user.email === newUser.email) {
+      verifiedStatus = false;
+    }
+  });
+
+  return verifiedStatus;
 };
