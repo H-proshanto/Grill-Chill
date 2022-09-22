@@ -1,4 +1,4 @@
 export const MSG_LOAD_TIME = 0.5;
 export const REFRESH = 400;
 export const RES_PER_PAGE = 10;
-export const LOAD_PAGE = 1300;
+export const LOAD_PAGE = 1500;
