@@ -33,12 +33,17 @@
       defer
       src="../src/js/components-loader/loadConfirmationForm.js"
     ></script>
-    <script type="module" async src="../src/js/controller.js"></script>
+    <script type="module" defer src="../src/js/controller.js"></script>
 
     <title>Grill & Chill</title>
   </head>
 
   <body>
+    <div class="page-loader">
+      <div class="page-loader-spinner">
+        <img src="../src/img/loader.gif" alt="">
+      </div>`
+    </div>
     <div class="container">
       <header class="header">
         <div class="search-bar-container"></div>

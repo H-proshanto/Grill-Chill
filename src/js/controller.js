@@ -12,10 +12,10 @@ import paginationView from './views/paginationView';
 import recipeView from '../js/views/recipeView';
 import confirmationView from '../js/views/confirmationView';
 import deleteItemConfimationView from './views/deleteItemConfimationView';
-
-import { MSG_LOAD_TIME, REFRESH, LOAD_PAGE } from './config';
 import deleteItemConfimationView from './views/deleteItemConfimationView';
 import confirmationView from './views/confirmationView';
+
+import { MSG_LOAD_TIME, REFRESH, LOAD_PAGE } from './config';
 
 const searchResults = async function () {
   try {
@@ -190,7 +190,6 @@ const showlAllRecipes = function () {
 };
 
 const init = function () {
-  setTimeout(() => {
     model.persistLogin();
     if (!model.state.isAdmin && !model.state.isUser) {
       loginView.setLoginView();
@@ -230,7 +229,6 @@ const init = function () {
     recipeView.addHandlerRender(recipes);
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
-  }, LOAD_PAGE);
 
   model.setLocalStorage();
 };
@@ -275,4 +273,7 @@ const refreshPage = function () {
   paginationView.refresh();
 };
 
-init();
+setTimeout(()=>{
+  document.querySelector('.page-loader').classList.add('hidden');
+  init();
+},LOAD_PAGE)
