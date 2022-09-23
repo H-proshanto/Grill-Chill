@@ -238,11 +238,6 @@ const confirmationViewinit = function () {
   confirmationView.init();
 };
 
-const logoutInit = function () {
-  addBtnHelpers.addLogoutBtn();
-  addEvListnerHelpers.addlogoutEvListner(logout);
-};
-
 const nullQueryRefresh = function () {
   paginationView.refresh();
   model.state.search.results = [];
@@ -265,12 +260,6 @@ const updateSearchResults = function () {
   paginationView.render(model.state.search);
   resultsView.render(model.getSearchResultsPage());
   deleteItemConfimationView.init();
-};
-
-const refreshPage = function () {
-  recipeView.refresh();
-  resultsView.refresh();
-  paginationView.refresh();
 };
 
 setTimeout(()=>{
