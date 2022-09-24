@@ -1,3 +1,5 @@
-$(function () {
-  $('.confirmation-form-container').load('confirmform.html');
-});
+(async () => {
+  $(function () {
+    $('.confirmation-form-container').load('confirmform.html');
+  });
+})();
