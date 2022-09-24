@@ -228,8 +228,8 @@ const init = function () {
     recipeView.addHandlerRender(recipes);
     recipeView.addHandlerUpdateServings(servings);
     recipeView.addHandlerAddBookmark(addbookmarks);
-
-  model.setLocalStorage();
+    recipes();
+    model.setLocalStorage();
 };
 
 const confirmationViewinit = function () {
