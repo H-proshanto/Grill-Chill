@@ -19,7 +19,7 @@ class AddRecipeView extends View {
   toogleWindow() {
     const hasMessage = this._parentEl.lastChild.classList?.contains('message');
     const hasErrorMessage =
-      this._parentEl.lastChild.classList?.contains('error');
+    this._parentEl.lastChild.classList?.contains('error');
     this._window.classList.toggle('hidden');
     this._overlay.classList.toggle('hidden');
 
@@ -56,14 +56,6 @@ class AddRecipeView extends View {
       const data = Object.fromEntries(dataArr);
       handler(data);
     });
-  }
-
-  showButton() {
-    this._btnOpen.classList.remove('hidden');
-  }
-
-  hideButton() {
-    this._btnOpen.classList.add('hidden');
   }
 
   _generateMarkup() {

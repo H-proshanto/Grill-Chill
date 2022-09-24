@@ -1,3 +1,5 @@
-$(function () {
-  $('.nav-container').load('navbar.html');
-});
+(async () => {
+  $(function () {
+    $('.nav-container').load('navbar.html');
+  });
+})();

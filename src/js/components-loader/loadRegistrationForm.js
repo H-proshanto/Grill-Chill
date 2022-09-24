@@ -1,3 +1,5 @@
-$(function () {
-  $('.registration-form-container').load('registrationform.html');
-});
+(async () => {
+  $(function () {
+    $('.registration-form-container').load('registrationform.html');
+  });
+})();

@@ -15,14 +15,6 @@ class BookmarksView extends View {
     window.addEventListener('load', handler);
   }
 
-  showButton() {
-    this._btnOpen.classList.remove('hidden');
-  }
-
-  hideButton() {
-    this._btnOpen.classList.add('hidden');
-  }
-
   _generateMarkup() {
     return this._data
       .map(bookmark => previewView.render(bookmark, false))

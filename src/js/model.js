@@ -161,30 +161,31 @@ export const setLoginHash = function (userData) {
   const admins = getAdmins();
   const users = getUsers();
 
-  for (let i = 0; i < admins.length; i++) {
+  admins.forEach( (admin, idx) => {
     if (
-      admins[i].username === userData.username &&
-      admins[i].password === userData.password
+      admin.username === userData.username &&
+      admin.password === userData.password
     ) {
-      window.location.hash = `156ad4A` + i.toString();
+      window.location.hash = `Xav6n9xA` + idx.toString();
     }
-  }
+  }) 
 
-  for (let i = 0; i < users.length; i++) {
+  users.forEach( (user, idx) => {
     if (
-      users[i].username === userData.username &&
-      users[i].password === userData.password
+      user.username === userData.username &&
+      user.password === userData.password
     ) {
-      window.location.hash = `156ad4U` + i.toString();
+      window.location.hash = `Xav6n9xU` + idx.toString();
     }
-  }
+  })
+  
   localStorage.setItem('loginHash', window.location.hash.slice(1));
 };
 
 export const persistLogin = function () {
   const hash = localStorage.getItem('loginHash');
 
-  if (hash !== null && hash.includes('156ad4')) {
+  if (hash !== null && hash.includes('Xav6n9x')) {
     const lastIndex = hash.length - 1;
     if (hash[lastIndex - 1] === 'A') {
       const admins = JSON.parse(localStorage.getItem('admins'));
@@ -286,32 +287,33 @@ export const deleteCurrentRecipe = function () {
   const users = getUsers();
   let index;
 
-  for (let i = 0; i < users.length; i++) {
+  users.forEach( (user, useridx) => {
     let indexOfBookmark = -1;
-    for (let j = 0; j < users[i].bookmarks.length; j++) {
-      if (users[i].bookmarks[j].id === id) {
-        indexOfBookmark = j;
+    user.bookmarks.forEach( (bookmark, idx) => {
+      if (bookmark.id === id) {
+        indexOfBookmark = idx;
       }
-    }
+    });
     if (indexOfBookmark !== -1) {
-      users[i].bookmarks.splice(indexOfBookmark, 1);
+      users[useridx].bookmarks.splice(indexOfBookmark, 1);
     }
-  }
+  });
 
-  for (let i = 0; i < recipes.length; i++) {
-    if (recipes[i].id === id) {
-      index = i;
+  recipes.forEach( (recipe, idx) => {
+    if (recipe.id === id) {
+      index = idx;
     }
-  }
+  }); 
 
   recipes.splice(index, 1);
   localStorage.setItem('recipes', JSON.stringify(recipes));
   localStorage.setItem('users', JSON.stringify(users));
-  for (let i = 0; i < state.search.results.length; i++) {
-    if (state.search.results[i].id === id) {
-      index = i;
+  state.search.results.forEach( (result, idx) => {
+    if (result.id === id) {
+      index = idx;
     }
-  }
+  });
+
   state.search.results.splice(index, 1);
 
   if (getSearchResultsPage().length === 0) {
@@ -350,18 +352,20 @@ const persistBookmarks = function () {
 };
 
 export const addBookmark = function (recipe) {
+  const isCurrentRecipe = recipe.id === state.recipe.id;
   state.bookmarks.push(recipe);
-
-  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+  
+  if (isCurrentRecipe) state.recipe.bookmarked = true;
 
   persistBookmarks();
 };
 
 export const deleteBookmark = function (id) {
   const index = state.bookmarks.findIndex(el => el.id === id);
+  const isCurrentRecipe = id === state.recipe.id
   state.bookmarks.splice(index, 1);
 
-  if (id === state.recipe.id) state.recipe.bookmarked = false;
+  if (isCurrentRecipe) state.recipe.bookmarked = false;
 
   persistBookmarks();
 };

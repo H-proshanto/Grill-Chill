@@ -1,3 +1,5 @@
-$(function () {
-  $('.recipe-container').load('recipe.html');
-});
+(async () => {
+  $(function () {
+    $('.recipe-container').load('recipe.html');
+  });
+})();

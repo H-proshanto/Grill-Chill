@@ -1,3 +1,5 @@
-$(function () {
-  $('.search-bar-container').load('searchbar.html');
-});
+(async () => {
+  $(function () {
+    $('.search-bar-container').load('searchbar.html');
+  });
+})();
