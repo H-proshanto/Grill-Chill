@@ -12,7 +12,6 @@ import paginationView from './views/paginationView';
 import recipeView from '../js/views/recipeView';
 import confirmationView from '../js/views/confirmationView';
 import deleteItemConfimationView from './views/deleteItemConfimationView';
-import deleteItemConfimationView from './views/deleteItemConfimationView';
 import confirmationView from './views/confirmationView';
 
 import { MSG_LOAD_TIME, REFRESH, LOAD_PAGE } from './config';
